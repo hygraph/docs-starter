@@ -1,0 +1,20 @@
+query GetAllNavItems {
+  navItems {
+    id
+    linkTo {
+      __typename
+      ... on Page {
+        title
+        slug
+      }
+      ... on Chapter {
+        title
+        slug
+        pages {
+          title
+          slug
+        }
+      }
+    }
+  }
+}
