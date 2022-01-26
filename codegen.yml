@@ -1,0 +1,12 @@
+overwrite: true
+schema: https://api-eu-central-1.graphcms.com/v2/ckyvt6qiu0k6101z09eyzh92t/master
+documents: "./app/**/*.{gql,graphql,ts,tsx}"
+generates:
+  ./app/generated/schema.server.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+hooks:
+  afterAllFileWrite:
+    - prettier --write
