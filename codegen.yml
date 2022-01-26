@@ -1,12 +1,17 @@
 overwrite: true
-schema: https://api-eu-central-1.graphcms.com/v2/ckyvt6qiu0k6101z09eyzh92t/master
+schema: ${GRAPHCMS_ENDPOINT}
 documents: "./app/**/*.{gql,graphql,ts,tsx}"
+
 generates:
   ./app/generated/schema.server.ts:
     plugins:
       - typescript
       - typescript-operations
       - typescript-graphql-request
+
+config:
+  gqlImport: graphql-request#gql
+
 hooks:
   afterAllFileWrite:
     - prettier --write

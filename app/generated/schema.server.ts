@@ -1,6 +1,6 @@
 import { GraphQLClient } from "graphql-request";
 import * as Dom from "graphql-request/dist/types.dom";
-import gql from "graphql-tag";
+import { gql } from "graphql-request";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
