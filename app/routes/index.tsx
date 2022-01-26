@@ -3,17 +3,16 @@ import type { LoaderFunction } from "remix";
 
 import { graphcms } from "~/lib/graphcms.server";
 import { getSdk } from "~/generated/schema.server";
+import type { GetAllNavItemsQuery } from "~/generated/schema.server";
 
 export const loader: LoaderFunction = async () => {
   const { GetAllNavItems } = getSdk(graphcms);
 
-  const { navItems } = await GetAllNavItems();
-
-  return { navItems };
+  return await GetAllNavItems();
 };
 
 export default function Index() {
-  const data = useLoaderData();
+  const data = useLoaderData<GetAllNavItemsQuery>();
 
   return (
     <div>
