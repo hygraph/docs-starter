@@ -41,7 +41,7 @@ function Document({ children }: { children: ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="">
+      <body>
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -54,14 +54,14 @@ function Document({ children }: { children: ReactNode }) {
 function Layout({ navigations }: GetAllNavItemsQuery) {
   return (
     <>
-      <Header />
-      <div className="mx-auto max-w-5xl px-6">
-        <div className="py-6 md:flex md:space-x-12 md:py-12">
+      <div className="mx-auto max-w-5xl">
+        <Header />
+        <div className="p-6 md:flex md:space-x-12 md:px-12 md:py-12">
           <nav className="sticky top-24 h-full w-full flex-shrink-0 pb-6 md:w-52 md:pb-12">
             <Nav navigations={navigations} />
           </nav>
           <main>
-            <div className="prose max-w-none">
+            <div className="prose prose-sky max-w-none">
               <Outlet />
             </div>
           </main>
