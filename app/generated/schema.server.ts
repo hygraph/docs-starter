@@ -5281,6 +5281,28 @@ export enum _SystemDateTimeFieldVariation {
   Localization = "localization",
 }
 
+export type NavChapterFragment = {
+  __typename?: "Chapter";
+  id: string;
+  title: string;
+  slug: string;
+  pages: Array<{ __typename?: "Page"; title: string; slug: string }>;
+};
+
+export type NavExternalLinkFragment = {
+  __typename?: "ExternalLink";
+  id: string;
+  label: string;
+  url: string;
+};
+
+export type NavPageFragment = {
+  __typename?: "Page";
+  id: string;
+  title: string;
+  slug: string;
+};
+
 export type GetAllNavItemsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllNavItemsQuery = {
@@ -5291,16 +5313,42 @@ export type GetAllNavItemsQuery = {
     linkTo: Array<
       | {
           __typename: "Chapter";
+          id: string;
           title: string;
           slug: string;
           pages: Array<{ __typename?: "Page"; title: string; slug: string }>;
         }
-      | { __typename: "ExternalLink"; label: string; url: string }
-      | { __typename: "Page"; title: string; slug: string }
+      | { __typename: "ExternalLink"; id: string; label: string; url: string }
+      | { __typename: "Page"; id: string; title: string; slug: string }
     >;
   }>;
 };
 
+export const NavChapterFragmentDoc = gql`
+  fragment NavChapter on Chapter {
+    id
+    title
+    slug
+    pages {
+      title
+      slug
+    }
+  }
+`;
+export const NavExternalLinkFragmentDoc = gql`
+  fragment NavExternalLink on ExternalLink {
+    id
+    label
+    url
+  }
+`;
+export const NavPageFragmentDoc = gql`
+  fragment NavPage on Page {
+    id
+    title
+    slug
+  }
+`;
 export const GetAllNavItemsDocument = gql`
   query GetAllNavItems {
     navigations(first: 1) {
@@ -5308,24 +5356,20 @@ export const GetAllNavItemsDocument = gql`
       linkTo {
         __typename
         ... on Page {
-          title
-          slug
+          ...NavPage
         }
         ... on Chapter {
-          title
-          slug
-          pages {
-            title
-            slug
-          }
+          ...NavChapter
         }
         ... on ExternalLink {
-          label
-          url
+          ...NavExternalLink
         }
       }
     }
   }
+  ${NavPageFragmentDoc}
+  ${NavChapterFragmentDoc}
+  ${NavExternalLinkFragmentDoc}
 `;
 
 export type SdkFunctionWrapper = <T>(
@@ -5357,3 +5401,33 @@ export function getSdk(
   };
 }
 export type Sdk = ReturnType<typeof getSdk>;
+
+export interface PossibleTypesResultData {
+  possibleTypes: {
+    [key: string]: string[];
+  };
+}
+const result: PossibleTypesResultData = {
+  possibleTypes: {
+    NavItemItem: ["Chapter", "ExternalLink", "Page"],
+    Node: [
+      "Asset",
+      "Chapter",
+      "ExternalLink",
+      "Navigation",
+      "Page",
+      "ScheduledOperation",
+      "ScheduledRelease",
+      "User",
+    ],
+    PageContentRichTextEmbeddedTypes: ["Asset"],
+    ScheduledOperationAffectedDocument: [
+      "Asset",
+      "Chapter",
+      "ExternalLink",
+      "Navigation",
+      "Page",
+    ],
+  },
+};
+export default result;

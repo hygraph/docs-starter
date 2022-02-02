@@ -1,0 +1,9 @@
+fragment NavChapter on Chapter {
+  id
+  title
+  slug
+  pages {
+    title
+    slug
+  }
+}

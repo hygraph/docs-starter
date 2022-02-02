@@ -4,20 +4,13 @@ query GetAllNavItems {
     linkTo {
       __typename
       ... on Page {
-        title
-        slug
+        ...NavPage
       }
       ... on Chapter {
-        title
-        slug
-        pages {
-          title
-          slug
-        }
+        ...NavChapter
       }
       ... on ExternalLink {
-        label
-        url
+        ...NavExternalLink
       }
     }
   }

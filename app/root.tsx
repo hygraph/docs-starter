@@ -57,8 +57,7 @@ function Layout({ navigations }: GetAllNavItemsQuery) {
       <Header />
       <div className="mx-auto max-w-5xl px-6">
         <div className="py-6 md:flex md:space-x-12 md:py-12">
-          <nav className="sticky top-24 w-full flex-shrink-0 pb-6 md:w-52 md:pb-12">
-            Hello world
+          <nav className="sticky top-24 h-full w-full flex-shrink-0 pb-6 md:w-52 md:pb-12">
             <Nav navigations={navigations} />
           </nav>
           <main>
