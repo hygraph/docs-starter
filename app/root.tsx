@@ -53,13 +53,22 @@ function Document({ children }: { children: ReactNode }) {
 
 function Layout({ navigations }: GetAllNavItemsQuery) {
   return (
-    <div className="relative mx-auto max-w-7xl">
+    <>
       <Header />
-      <div>
-        <Nav navigations={navigations} />
-        <Outlet />
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="py-6 md:flex md:space-x-12 md:py-12">
+          <nav className="sticky top-24 w-full flex-shrink-0 pb-6 md:w-52 md:pb-12">
+            Hello world
+            <Nav navigations={navigations} />
+          </nav>
+          <main>
+            <div className="prose max-w-none">
+              <Outlet />
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
