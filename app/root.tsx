@@ -29,7 +29,7 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async () => {
   const { GetAllNavItems } = getSdk(graphcms);
 
-  return await GetAllNavItems();
+  return GetAllNavItems();
 };
 
 function Document({ children }: { children: ReactNode }) {

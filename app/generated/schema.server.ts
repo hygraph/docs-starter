@@ -5324,6 +5324,40 @@ export type GetAllNavItemsQuery = {
   }>;
 };
 
+export type GetFirstPageFromChapterQueryVariables = Exact<{
+  slug: Scalars["String"];
+}>;
+
+export type GetFirstPageFromChapterQuery = {
+  __typename?: "Query";
+  chapter?:
+    | {
+        __typename?: "Chapter";
+        pages: Array<{ __typename?: "Page"; slug: string }>;
+      }
+    | null
+    | undefined;
+};
+
+export type GetPageQueryVariables = Exact<{
+  slug: Scalars["String"];
+}>;
+
+export type GetPageQuery = {
+  __typename?: "Query";
+  page?:
+    | {
+        __typename?: "Page";
+        chapter?: { __typename?: "Chapter"; slug: string } | null | undefined;
+        content?:
+          | { __typename?: "PageContentRichText"; json: any }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
 export const NavChapterFragmentDoc = gql`
   fragment NavChapter on Chapter {
     id
@@ -5371,6 +5405,29 @@ export const GetAllNavItemsDocument = gql`
   ${NavChapterFragmentDoc}
   ${NavExternalLinkFragmentDoc}
 `;
+export const GetFirstPageFromChapterDocument = gql`
+  query GetFirstPageFromChapter($slug: String!) {
+    chapter(where: { slug: $slug }) {
+      pages(first: 1) {
+        slug
+      }
+    }
+  }
+`;
+export const GetPageDocument = gql`
+  query GetPage($slug: String!) {
+    page(where: { slug: $slug }) {
+      chapter {
+        slug
+      }
+      content {
+        ... on PageContentRichText {
+          json
+        }
+      }
+    }
+  }
+`;
 
 export type SdkFunctionWrapper = <T>(
   action: (requestHeaders?: Record<string, string>) => Promise<T>,
@@ -5396,6 +5453,33 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders }
           ),
         "GetAllNavItems"
+      );
+    },
+    GetFirstPageFromChapter(
+      variables: GetFirstPageFromChapterQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<GetFirstPageFromChapterQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetFirstPageFromChapterQuery>(
+            GetFirstPageFromChapterDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "GetFirstPageFromChapter"
+      );
+    },
+    GetPage(
+      variables: GetPageQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<GetPageQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetPageQuery>(GetPageDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "GetPage"
       );
     },
   };

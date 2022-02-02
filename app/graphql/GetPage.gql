@@ -1,0 +1,12 @@
+query GetPage($slug: String!) {
+  page(where: { slug: $slug }) {
+    chapter {
+      slug
+    }
+    content {
+      ... on PageContentRichText {
+        json
+      }
+    }
+  }
+}
