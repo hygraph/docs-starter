@@ -5998,7 +5998,7 @@ export type GetAllNavItemsQuery = {
           slug: string;
           pages: Array<{ __typename?: "Page"; title: string; slug: string }>;
         }
-      | { __typename: "ExternalLink"; label: string; url: string; id: string }
+      | { __typename: "ExternalLink"; id: string; label: string; url: string }
       | { __typename: "Page"; id: string; title: string; slug: string }
     >;
   }>;
@@ -6099,8 +6099,7 @@ export const GetAllNavItemsDocument = gql`
           ...NavExternalLink
         }
         ... on ExternalLink {
-          label
-          url
+          ...NavExternalLink
         }
       }
     }

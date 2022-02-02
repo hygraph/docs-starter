@@ -13,8 +13,7 @@ query GetAllNavItems {
         ...NavExternalLink
       }
       ... on ExternalLink {
-        label
-        url
+        ...NavExternalLink
       }
     }
   }
