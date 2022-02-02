@@ -1,7 +1,7 @@
 import type { GetAllNavItemsQuery } from "~/generated/schema.server";
 
-export function Nav({ navItems }: GetAllNavItemsQuery) {
-  console.log(navItems);
+export function Nav({ navigations }: GetAllNavItemsQuery) {
+  console.log(navigations);
   return (
     <aside>
       <nav></nav>

@@ -51,12 +51,12 @@ function Document({ children }: { children: ReactNode }) {
   );
 }
 
-function Layout({ navItems }: GetAllNavItemsQuery) {
+function Layout({ navigations }: GetAllNavItemsQuery) {
   return (
     <div className="relative mx-auto max-w-7xl">
       <Header />
       <div>
-        <Nav navItems={navItems} />
+        <Nav navigations={navigations} />
         <Outlet />
       </div>
     </div>
@@ -64,11 +64,11 @@ function Layout({ navItems }: GetAllNavItemsQuery) {
 }
 
 export default function App() {
-  const { navItems } = useLoaderData<GetAllNavItemsQuery>();
+  const { navigations } = useLoaderData<GetAllNavItemsQuery>();
 
   return (
     <Document>
-      <Layout navItems={navItems} />
+      <Layout navigations={navigations} />
     </Document>
   );
 }

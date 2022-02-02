@@ -673,7 +673,7 @@ export type Chapter = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars["ID"];
-  navItem?: Maybe<NavItem>;
+  navItem?: Maybe<Navigation>;
   pages: Array<Page>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars["DateTime"]>;
@@ -758,7 +758,7 @@ export type ChapterConnection = {
 
 export type ChapterCreateInput = {
   createdAt?: InputMaybe<Scalars["DateTime"]>;
-  navItem?: InputMaybe<NavItemCreateOneInlineInput>;
+  navItem?: InputMaybe<NavigationCreateOneInlineInput>;
   pages?: InputMaybe<PageCreateManyInlineInput>;
   slug: Scalars["String"];
   title: Scalars["String"];
@@ -833,7 +833,7 @@ export type ChapterManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars["ID"]>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars["ID"]>;
-  navItem?: InputMaybe<NavItemWhereInput>;
+  navItem?: InputMaybe<NavigationWhereInput>;
   pages_every?: InputMaybe<PageWhereInput>;
   pages_none?: InputMaybe<PageWhereInput>;
   pages_some?: InputMaybe<PageWhereInput>;
@@ -928,7 +928,7 @@ export enum ChapterOrderByInput {
 }
 
 export type ChapterUpdateInput = {
-  navItem?: InputMaybe<NavItemUpdateOneInlineInput>;
+  navItem?: InputMaybe<NavigationUpdateOneInlineInput>;
   pages?: InputMaybe<PageUpdateManyInlineInput>;
   slug?: InputMaybe<Scalars["String"]>;
   title?: InputMaybe<Scalars["String"]>;
@@ -1043,7 +1043,7 @@ export type ChapterWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars["ID"]>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars["ID"]>;
-  navItem?: InputMaybe<NavItemWhereInput>;
+  navItem?: InputMaybe<NavigationWhereInput>;
   pages_every?: InputMaybe<PageWhereInput>;
   pages_none?: InputMaybe<PageWhereInput>;
   pages_some?: InputMaybe<PageWhereInput>;
@@ -1217,6 +1217,453 @@ export type DocumentVersion = {
   stage: Stage;
 };
 
+export type ExternalLink = Node & {
+  __typename?: "ExternalLink";
+  /** The time the document was created */
+  createdAt: Scalars["DateTime"];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<ExternalLink>;
+  /** List of ExternalLink versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars["ID"];
+  label: Scalars["String"];
+  navItem?: Maybe<Navigation>;
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars["DateTime"]>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars["DateTime"];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+  url: Scalars["String"];
+};
+
+export type ExternalLinkCreatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type ExternalLinkDocumentInStagesArgs = {
+  includeCurrent?: Scalars["Boolean"];
+  inheritLocale?: Scalars["Boolean"];
+  stages?: Array<Stage>;
+};
+
+export type ExternalLinkHistoryArgs = {
+  limit?: Scalars["Int"];
+  skip?: Scalars["Int"];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+export type ExternalLinkNavItemArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type ExternalLinkPublishedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type ExternalLinkScheduledInArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+export type ExternalLinkUpdatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type ExternalLinkConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: ExternalLinkWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type ExternalLinkConnection = {
+  __typename?: "ExternalLinkConnection";
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<ExternalLinkEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type ExternalLinkCreateInput = {
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
+  label: Scalars["String"];
+  navItem?: InputMaybe<NavigationCreateOneInlineInput>;
+  updatedAt?: InputMaybe<Scalars["DateTime"]>;
+  url: Scalars["String"];
+};
+
+export type ExternalLinkCreateManyInlineInput = {
+  /** Connect multiple existing ExternalLink documents */
+  connect?: InputMaybe<Array<ExternalLinkWhereUniqueInput>>;
+  /** Create and connect multiple existing ExternalLink documents */
+  create?: InputMaybe<Array<ExternalLinkCreateInput>>;
+};
+
+export type ExternalLinkCreateOneInlineInput = {
+  /** Connect one existing ExternalLink document */
+  connect?: InputMaybe<ExternalLinkWhereUniqueInput>;
+  /** Create and connect one ExternalLink document */
+  create?: InputMaybe<ExternalLinkCreateInput>;
+};
+
+/** An edge in a connection. */
+export type ExternalLinkEdge = {
+  __typename?: "ExternalLinkEdge";
+  /** A cursor for use in pagination. */
+  cursor: Scalars["String"];
+  /** The item at the end of the edge. */
+  node: ExternalLink;
+};
+
+/** Identifies documents */
+export type ExternalLinkManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<ExternalLinkWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<ExternalLinkWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<ExternalLinkWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars["String"]>;
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars["ID"]>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars["ID"]>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars["ID"]>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars["ID"]>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars["ID"]>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars["ID"]>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars["ID"]>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars["ID"]>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars["ID"]>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars["ID"]>;
+  label?: InputMaybe<Scalars["String"]>;
+  /** All values containing the given string. */
+  label_contains?: InputMaybe<Scalars["String"]>;
+  /** All values ending with the given string. */
+  label_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
+  label_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values that are not equal to given value. */
+  label_not?: InputMaybe<Scalars["String"]>;
+  /** All values not containing the given string. */
+  label_not_contains?: InputMaybe<Scalars["String"]>;
+  /** All values not ending with the given string */
+  label_not_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are not contained in given list. */
+  label_not_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values not starting with the given string. */
+  label_not_starts_with?: InputMaybe<Scalars["String"]>;
+  /** All values starting with the given string. */
+  label_starts_with?: InputMaybe<Scalars["String"]>;
+  navItem?: InputMaybe<NavigationWhereInput>;
+  publishedAt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  url?: InputMaybe<Scalars["String"]>;
+  /** All values containing the given string. */
+  url_contains?: InputMaybe<Scalars["String"]>;
+  /** All values ending with the given string. */
+  url_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
+  url_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values that are not equal to given value. */
+  url_not?: InputMaybe<Scalars["String"]>;
+  /** All values not containing the given string. */
+  url_not_contains?: InputMaybe<Scalars["String"]>;
+  /** All values not ending with the given string */
+  url_not_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are not contained in given list. */
+  url_not_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values not starting with the given string. */
+  url_not_starts_with?: InputMaybe<Scalars["String"]>;
+  /** All values starting with the given string. */
+  url_starts_with?: InputMaybe<Scalars["String"]>;
+};
+
+export enum ExternalLinkOrderByInput {
+  CreatedAtAsc = "createdAt_ASC",
+  CreatedAtDesc = "createdAt_DESC",
+  IdAsc = "id_ASC",
+  IdDesc = "id_DESC",
+  LabelAsc = "label_ASC",
+  LabelDesc = "label_DESC",
+  PublishedAtAsc = "publishedAt_ASC",
+  PublishedAtDesc = "publishedAt_DESC",
+  UpdatedAtAsc = "updatedAt_ASC",
+  UpdatedAtDesc = "updatedAt_DESC",
+  UrlAsc = "url_ASC",
+  UrlDesc = "url_DESC",
+}
+
+export type ExternalLinkUpdateInput = {
+  label?: InputMaybe<Scalars["String"]>;
+  navItem?: InputMaybe<NavigationUpdateOneInlineInput>;
+  url?: InputMaybe<Scalars["String"]>;
+};
+
+export type ExternalLinkUpdateManyInlineInput = {
+  /** Connect multiple existing ExternalLink documents */
+  connect?: InputMaybe<Array<ExternalLinkConnectInput>>;
+  /** Create and connect multiple ExternalLink documents */
+  create?: InputMaybe<Array<ExternalLinkCreateInput>>;
+  /** Delete multiple ExternalLink documents */
+  delete?: InputMaybe<Array<ExternalLinkWhereUniqueInput>>;
+  /** Disconnect multiple ExternalLink documents */
+  disconnect?: InputMaybe<Array<ExternalLinkWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing ExternalLink documents */
+  set?: InputMaybe<Array<ExternalLinkWhereUniqueInput>>;
+  /** Update multiple ExternalLink documents */
+  update?: InputMaybe<Array<ExternalLinkUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple ExternalLink documents */
+  upsert?: InputMaybe<Array<ExternalLinkUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type ExternalLinkUpdateManyInput = {
+  label?: InputMaybe<Scalars["String"]>;
+};
+
+export type ExternalLinkUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: ExternalLinkUpdateManyInput;
+  /** Document search */
+  where: ExternalLinkWhereInput;
+};
+
+export type ExternalLinkUpdateOneInlineInput = {
+  /** Connect existing ExternalLink document */
+  connect?: InputMaybe<ExternalLinkWhereUniqueInput>;
+  /** Create and connect one ExternalLink document */
+  create?: InputMaybe<ExternalLinkCreateInput>;
+  /** Delete currently connected ExternalLink document */
+  delete?: InputMaybe<Scalars["Boolean"]>;
+  /** Disconnect currently connected ExternalLink document */
+  disconnect?: InputMaybe<Scalars["Boolean"]>;
+  /** Update single ExternalLink document */
+  update?: InputMaybe<ExternalLinkUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single ExternalLink document */
+  upsert?: InputMaybe<ExternalLinkUpsertWithNestedWhereUniqueInput>;
+};
+
+export type ExternalLinkUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: ExternalLinkUpdateInput;
+  /** Unique document search */
+  where: ExternalLinkWhereUniqueInput;
+};
+
+export type ExternalLinkUpsertInput = {
+  /** Create document if it didn't exist */
+  create: ExternalLinkCreateInput;
+  /** Update document if it exists */
+  update: ExternalLinkUpdateInput;
+};
+
+export type ExternalLinkUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: ExternalLinkUpsertInput;
+  /** Unique document search */
+  where: ExternalLinkWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type ExternalLinkWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<ExternalLinkWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<ExternalLinkWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<ExternalLinkWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars["String"]>;
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars["ID"]>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars["ID"]>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars["ID"]>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars["ID"]>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars["ID"]>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars["ID"]>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars["ID"]>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars["ID"]>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars["ID"]>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars["ID"]>;
+  label?: InputMaybe<Scalars["String"]>;
+  /** All values containing the given string. */
+  label_contains?: InputMaybe<Scalars["String"]>;
+  /** All values ending with the given string. */
+  label_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
+  label_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values that are not equal to given value. */
+  label_not?: InputMaybe<Scalars["String"]>;
+  /** All values not containing the given string. */
+  label_not_contains?: InputMaybe<Scalars["String"]>;
+  /** All values not ending with the given string */
+  label_not_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are not contained in given list. */
+  label_not_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values not starting with the given string. */
+  label_not_starts_with?: InputMaybe<Scalars["String"]>;
+  /** All values starting with the given string. */
+  label_starts_with?: InputMaybe<Scalars["String"]>;
+  navItem?: InputMaybe<NavigationWhereInput>;
+  publishedAt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars["DateTime"]>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars["DateTime"]>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars["DateTime"]>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  url?: InputMaybe<Scalars["String"]>;
+  /** All values containing the given string. */
+  url_contains?: InputMaybe<Scalars["String"]>;
+  /** All values ending with the given string. */
+  url_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
+  url_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values that are not equal to given value. */
+  url_not?: InputMaybe<Scalars["String"]>;
+  /** All values not containing the given string. */
+  url_not_contains?: InputMaybe<Scalars["String"]>;
+  /** All values not ending with the given string */
+  url_not_ends_with?: InputMaybe<Scalars["String"]>;
+  /** All values that are not contained in given list. */
+  url_not_in?: InputMaybe<Array<Scalars["String"]>>;
+  /** All values not starting with the given string. */
+  url_not_starts_with?: InputMaybe<Scalars["String"]>;
+  /** All values starting with the given string. */
+  url_starts_with?: InputMaybe<Scalars["String"]>;
+};
+
+/** References ExternalLink record uniquely */
+export type ExternalLinkWhereUniqueInput = {
+  id?: InputMaybe<Scalars["ID"]>;
+  url?: InputMaybe<Scalars["String"]>;
+};
+
 export enum ImageFit {
   /** Resizes the image to fit within the specified parameters without distorting, cropping, or changing the aspect ratio. */
   Clip = "clip",
@@ -1277,8 +1724,10 @@ export type Mutation = {
   createAsset?: Maybe<Asset>;
   /** Create one chapter */
   createChapter?: Maybe<Chapter>;
-  /** Create one navItem */
-  createNavItem?: Maybe<NavItem>;
+  /** Create one externalLink */
+  createExternalLink?: Maybe<ExternalLink>;
+  /** Create one navigation */
+  createNavigation?: Maybe<Navigation>;
   /** Create one page */
   createPage?: Maybe<Page>;
   /** Create one scheduledRelease */
@@ -1287,6 +1736,8 @@ export type Mutation = {
   deleteAsset?: Maybe<Asset>;
   /** Delete one chapter from _all_ existing stages. Returns deleted document. */
   deleteChapter?: Maybe<Chapter>;
+  /** Delete one externalLink from _all_ existing stages. Returns deleted document. */
+  deleteExternalLink?: Maybe<ExternalLink>;
   /**
    * Delete many Asset documents
    * @deprecated Please use the new paginated many mutation (deleteManyAssetsConnection)
@@ -1302,12 +1753,19 @@ export type Mutation = {
   /** Delete many Chapter documents, return deleted documents */
   deleteManyChaptersConnection: ChapterConnection;
   /**
-   * Delete many NavItem documents
-   * @deprecated Please use the new paginated many mutation (deleteManyNavItemsConnection)
+   * Delete many ExternalLink documents
+   * @deprecated Please use the new paginated many mutation (deleteManyExternalLinksConnection)
    */
-  deleteManyNavItems: BatchPayload;
-  /** Delete many NavItem documents, return deleted documents */
-  deleteManyNavItemsConnection: NavItemConnection;
+  deleteManyExternalLinks: BatchPayload;
+  /** Delete many ExternalLink documents, return deleted documents */
+  deleteManyExternalLinksConnection: ExternalLinkConnection;
+  /**
+   * Delete many Navigation documents
+   * @deprecated Please use the new paginated many mutation (deleteManyNavigationsConnection)
+   */
+  deleteManyNavigations: BatchPayload;
+  /** Delete many Navigation documents, return deleted documents */
+  deleteManyNavigationsConnection: NavigationConnection;
   /**
    * Delete many Page documents
    * @deprecated Please use the new paginated many mutation (deleteManyPagesConnection)
@@ -1315,8 +1773,8 @@ export type Mutation = {
   deleteManyPages: BatchPayload;
   /** Delete many Page documents, return deleted documents */
   deleteManyPagesConnection: PageConnection;
-  /** Delete one navItem from _all_ existing stages. Returns deleted document. */
-  deleteNavItem?: Maybe<NavItem>;
+  /** Delete one navigation from _all_ existing stages. Returns deleted document. */
+  deleteNavigation?: Maybe<Navigation>;
   /** Delete one page from _all_ existing stages. Returns deleted document. */
   deletePage?: Maybe<Page>;
   /** Delete and return scheduled operation */
@@ -1327,6 +1785,8 @@ export type Mutation = {
   publishAsset?: Maybe<Asset>;
   /** Publish one chapter */
   publishChapter?: Maybe<Chapter>;
+  /** Publish one externalLink */
+  publishExternalLink?: Maybe<ExternalLink>;
   /**
    * Publish many Asset documents
    * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
@@ -1342,12 +1802,19 @@ export type Mutation = {
   /** Publish many Chapter documents */
   publishManyChaptersConnection: ChapterConnection;
   /**
-   * Publish many NavItem documents
-   * @deprecated Please use the new paginated many mutation (publishManyNavItemsConnection)
+   * Publish many ExternalLink documents
+   * @deprecated Please use the new paginated many mutation (publishManyExternalLinksConnection)
    */
-  publishManyNavItems: BatchPayload;
-  /** Publish many NavItem documents */
-  publishManyNavItemsConnection: NavItemConnection;
+  publishManyExternalLinks: BatchPayload;
+  /** Publish many ExternalLink documents */
+  publishManyExternalLinksConnection: ExternalLinkConnection;
+  /**
+   * Publish many Navigation documents
+   * @deprecated Please use the new paginated many mutation (publishManyNavigationsConnection)
+   */
+  publishManyNavigations: BatchPayload;
+  /** Publish many Navigation documents */
+  publishManyNavigationsConnection: NavigationConnection;
   /**
    * Publish many Page documents
    * @deprecated Please use the new paginated many mutation (publishManyPagesConnection)
@@ -1355,30 +1822,36 @@ export type Mutation = {
   publishManyPages: BatchPayload;
   /** Publish many Page documents */
   publishManyPagesConnection: PageConnection;
-  /** Publish one navItem */
-  publishNavItem?: Maybe<NavItem>;
+  /** Publish one navigation */
+  publishNavigation?: Maybe<Navigation>;
   /** Publish one page */
   publishPage?: Maybe<Page>;
   /** Schedule to publish one asset */
   schedulePublishAsset?: Maybe<Asset>;
   /** Schedule to publish one chapter */
   schedulePublishChapter?: Maybe<Chapter>;
-  /** Schedule to publish one navItem */
-  schedulePublishNavItem?: Maybe<NavItem>;
+  /** Schedule to publish one externalLink */
+  schedulePublishExternalLink?: Maybe<ExternalLink>;
+  /** Schedule to publish one navigation */
+  schedulePublishNavigation?: Maybe<Navigation>;
   /** Schedule to publish one page */
   schedulePublishPage?: Maybe<Page>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAsset?: Maybe<Asset>;
   /** Unpublish one chapter from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishChapter?: Maybe<Chapter>;
-  /** Unpublish one navItem from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  scheduleUnpublishNavItem?: Maybe<NavItem>;
+  /** Unpublish one externalLink from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishExternalLink?: Maybe<ExternalLink>;
+  /** Unpublish one navigation from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishNavigation?: Maybe<Navigation>;
   /** Unpublish one page from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishPage?: Maybe<Page>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>;
   /** Unpublish one chapter from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishChapter?: Maybe<Chapter>;
+  /** Unpublish one externalLink from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishExternalLink?: Maybe<ExternalLink>;
   /**
    * Unpublish many Asset documents
    * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
@@ -1394,12 +1867,19 @@ export type Mutation = {
   /** Find many Chapter documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyChaptersConnection: ChapterConnection;
   /**
-   * Unpublish many NavItem documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyNavItemsConnection)
+   * Unpublish many ExternalLink documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyExternalLinksConnection)
    */
-  unpublishManyNavItems: BatchPayload;
-  /** Find many NavItem documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyNavItemsConnection: NavItemConnection;
+  unpublishManyExternalLinks: BatchPayload;
+  /** Find many ExternalLink documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyExternalLinksConnection: ExternalLinkConnection;
+  /**
+   * Unpublish many Navigation documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyNavigationsConnection)
+   */
+  unpublishManyNavigations: BatchPayload;
+  /** Find many Navigation documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyNavigationsConnection: NavigationConnection;
   /**
    * Unpublish many Page documents
    * @deprecated Please use the new paginated many mutation (unpublishManyPagesConnection)
@@ -1407,14 +1887,16 @@ export type Mutation = {
   unpublishManyPages: BatchPayload;
   /** Find many Page documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyPagesConnection: PageConnection;
-  /** Unpublish one navItem from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishNavItem?: Maybe<NavItem>;
+  /** Unpublish one navigation from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishNavigation?: Maybe<Navigation>;
   /** Unpublish one page from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishPage?: Maybe<Page>;
   /** Update one asset */
   updateAsset?: Maybe<Asset>;
   /** Update one chapter */
   updateChapter?: Maybe<Chapter>;
+  /** Update one externalLink */
+  updateExternalLink?: Maybe<ExternalLink>;
   /**
    * Update many assets
    * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
@@ -1430,12 +1912,19 @@ export type Mutation = {
   /** Update many Chapter documents */
   updateManyChaptersConnection: ChapterConnection;
   /**
-   * Update many navItems
-   * @deprecated Please use the new paginated many mutation (updateManyNavItemsConnection)
+   * Update many externalLinks
+   * @deprecated Please use the new paginated many mutation (updateManyExternalLinksConnection)
    */
-  updateManyNavItems: BatchPayload;
-  /** Update many NavItem documents */
-  updateManyNavItemsConnection: NavItemConnection;
+  updateManyExternalLinks: BatchPayload;
+  /** Update many ExternalLink documents */
+  updateManyExternalLinksConnection: ExternalLinkConnection;
+  /**
+   * Update many navigations
+   * @deprecated Please use the new paginated many mutation (updateManyNavigationsConnection)
+   */
+  updateManyNavigations: BatchPayload;
+  /** Update many Navigation documents */
+  updateManyNavigationsConnection: NavigationConnection;
   /**
    * Update many pages
    * @deprecated Please use the new paginated many mutation (updateManyPagesConnection)
@@ -1443,8 +1932,8 @@ export type Mutation = {
   updateManyPages: BatchPayload;
   /** Update many Page documents */
   updateManyPagesConnection: PageConnection;
-  /** Update one navItem */
-  updateNavItem?: Maybe<NavItem>;
+  /** Update one navigation */
+  updateNavigation?: Maybe<Navigation>;
   /** Update one page */
   updatePage?: Maybe<Page>;
   /** Update one scheduledRelease */
@@ -1453,8 +1942,10 @@ export type Mutation = {
   upsertAsset?: Maybe<Asset>;
   /** Upsert one chapter */
   upsertChapter?: Maybe<Chapter>;
-  /** Upsert one navItem */
-  upsertNavItem?: Maybe<NavItem>;
+  /** Upsert one externalLink */
+  upsertExternalLink?: Maybe<ExternalLink>;
+  /** Upsert one navigation */
+  upsertNavigation?: Maybe<Navigation>;
   /** Upsert one page */
   upsertPage?: Maybe<Page>;
 };
@@ -1467,8 +1958,12 @@ export type MutationCreateChapterArgs = {
   data: ChapterCreateInput;
 };
 
-export type MutationCreateNavItemArgs = {
-  data: NavItemCreateInput;
+export type MutationCreateExternalLinkArgs = {
+  data: ExternalLinkCreateInput;
+};
+
+export type MutationCreateNavigationArgs = {
+  data: NavigationCreateInput;
 };
 
 export type MutationCreatePageArgs = {
@@ -1485,6 +1980,10 @@ export type MutationDeleteAssetArgs = {
 
 export type MutationDeleteChapterArgs = {
   where: ChapterWhereUniqueInput;
+};
+
+export type MutationDeleteExternalLinkArgs = {
+  where: ExternalLinkWhereUniqueInput;
 };
 
 export type MutationDeleteManyAssetsArgs = {
@@ -1513,17 +2012,30 @@ export type MutationDeleteManyChaptersConnectionArgs = {
   where?: InputMaybe<ChapterManyWhereInput>;
 };
 
-export type MutationDeleteManyNavItemsArgs = {
-  where?: InputMaybe<NavItemManyWhereInput>;
+export type MutationDeleteManyExternalLinksArgs = {
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
 };
 
-export type MutationDeleteManyNavItemsConnectionArgs = {
+export type MutationDeleteManyExternalLinksConnectionArgs = {
   after?: InputMaybe<Scalars["ID"]>;
   before?: InputMaybe<Scalars["ID"]>;
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
   skip?: InputMaybe<Scalars["Int"]>;
-  where?: InputMaybe<NavItemManyWhereInput>;
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
+};
+
+export type MutationDeleteManyNavigationsArgs = {
+  where?: InputMaybe<NavigationManyWhereInput>;
+};
+
+export type MutationDeleteManyNavigationsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>;
+  before?: InputMaybe<Scalars["ID"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<NavigationManyWhereInput>;
 };
 
 export type MutationDeleteManyPagesArgs = {
@@ -1539,8 +2051,8 @@ export type MutationDeleteManyPagesConnectionArgs = {
   where?: InputMaybe<PageManyWhereInput>;
 };
 
-export type MutationDeleteNavItemArgs = {
-  where: NavItemWhereUniqueInput;
+export type MutationDeleteNavigationArgs = {
+  where: NavigationWhereUniqueInput;
 };
 
 export type MutationDeletePageArgs = {
@@ -1566,6 +2078,11 @@ export type MutationPublishAssetArgs = {
 export type MutationPublishChapterArgs = {
   to?: Array<Stage>;
   where: ChapterWhereUniqueInput;
+};
+
+export type MutationPublishExternalLinkArgs = {
+  to?: Array<Stage>;
+  where: ExternalLinkWhereUniqueInput;
 };
 
 export type MutationPublishManyAssetsArgs = {
@@ -1606,12 +2123,12 @@ export type MutationPublishManyChaptersConnectionArgs = {
   where?: InputMaybe<ChapterManyWhereInput>;
 };
 
-export type MutationPublishManyNavItemsArgs = {
+export type MutationPublishManyExternalLinksArgs = {
   to?: Array<Stage>;
-  where?: InputMaybe<NavItemManyWhereInput>;
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
 };
 
-export type MutationPublishManyNavItemsConnectionArgs = {
+export type MutationPublishManyExternalLinksConnectionArgs = {
   after?: InputMaybe<Scalars["ID"]>;
   before?: InputMaybe<Scalars["ID"]>;
   first?: InputMaybe<Scalars["Int"]>;
@@ -1619,7 +2136,23 @@ export type MutationPublishManyNavItemsConnectionArgs = {
   last?: InputMaybe<Scalars["Int"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   to?: Array<Stage>;
-  where?: InputMaybe<NavItemManyWhereInput>;
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
+};
+
+export type MutationPublishManyNavigationsArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<NavigationManyWhereInput>;
+};
+
+export type MutationPublishManyNavigationsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>;
+  before?: InputMaybe<Scalars["ID"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars["Int"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  to?: Array<Stage>;
+  where?: InputMaybe<NavigationManyWhereInput>;
 };
 
 export type MutationPublishManyPagesArgs = {
@@ -1638,9 +2171,9 @@ export type MutationPublishManyPagesConnectionArgs = {
   where?: InputMaybe<PageManyWhereInput>;
 };
 
-export type MutationPublishNavItemArgs = {
+export type MutationPublishNavigationArgs = {
   to?: Array<Stage>;
-  where: NavItemWhereUniqueInput;
+  where: NavigationWhereUniqueInput;
 };
 
 export type MutationPublishPageArgs = {
@@ -1665,11 +2198,18 @@ export type MutationSchedulePublishChapterArgs = {
   where: ChapterWhereUniqueInput;
 };
 
-export type MutationSchedulePublishNavItemArgs = {
+export type MutationSchedulePublishExternalLinkArgs = {
   releaseAt?: InputMaybe<Scalars["DateTime"]>;
   releaseId?: InputMaybe<Scalars["String"]>;
   to?: Array<Stage>;
-  where: NavItemWhereUniqueInput;
+  where: ExternalLinkWhereUniqueInput;
+};
+
+export type MutationSchedulePublishNavigationArgs = {
+  releaseAt?: InputMaybe<Scalars["DateTime"]>;
+  releaseId?: InputMaybe<Scalars["String"]>;
+  to?: Array<Stage>;
+  where: NavigationWhereUniqueInput;
 };
 
 export type MutationSchedulePublishPageArgs = {
@@ -1695,11 +2235,18 @@ export type MutationScheduleUnpublishChapterArgs = {
   where: ChapterWhereUniqueInput;
 };
 
-export type MutationScheduleUnpublishNavItemArgs = {
+export type MutationScheduleUnpublishExternalLinkArgs = {
   from?: Array<Stage>;
   releaseAt?: InputMaybe<Scalars["DateTime"]>;
   releaseId?: InputMaybe<Scalars["String"]>;
-  where: NavItemWhereUniqueInput;
+  where: ExternalLinkWhereUniqueInput;
+};
+
+export type MutationScheduleUnpublishNavigationArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars["DateTime"]>;
+  releaseId?: InputMaybe<Scalars["String"]>;
+  where: NavigationWhereUniqueInput;
 };
 
 export type MutationScheduleUnpublishPageArgs = {
@@ -1719,6 +2266,11 @@ export type MutationUnpublishAssetArgs = {
 export type MutationUnpublishChapterArgs = {
   from?: Array<Stage>;
   where: ChapterWhereUniqueInput;
+};
+
+export type MutationUnpublishExternalLinkArgs = {
+  from?: Array<Stage>;
+  where: ExternalLinkWhereUniqueInput;
 };
 
 export type MutationUnpublishManyAssetsArgs = {
@@ -1757,12 +2309,12 @@ export type MutationUnpublishManyChaptersConnectionArgs = {
   where?: InputMaybe<ChapterManyWhereInput>;
 };
 
-export type MutationUnpublishManyNavItemsArgs = {
+export type MutationUnpublishManyExternalLinksArgs = {
   from?: Array<Stage>;
-  where?: InputMaybe<NavItemManyWhereInput>;
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
 };
 
-export type MutationUnpublishManyNavItemsConnectionArgs = {
+export type MutationUnpublishManyExternalLinksConnectionArgs = {
   after?: InputMaybe<Scalars["ID"]>;
   before?: InputMaybe<Scalars["ID"]>;
   first?: InputMaybe<Scalars["Int"]>;
@@ -1770,7 +2322,23 @@ export type MutationUnpublishManyNavItemsConnectionArgs = {
   last?: InputMaybe<Scalars["Int"]>;
   skip?: InputMaybe<Scalars["Int"]>;
   stage?: InputMaybe<Stage>;
-  where?: InputMaybe<NavItemManyWhereInput>;
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
+};
+
+export type MutationUnpublishManyNavigationsArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<NavigationManyWhereInput>;
+};
+
+export type MutationUnpublishManyNavigationsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>;
+  before?: InputMaybe<Scalars["ID"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars["Int"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<NavigationManyWhereInput>;
 };
 
 export type MutationUnpublishManyPagesArgs = {
@@ -1789,9 +2357,9 @@ export type MutationUnpublishManyPagesConnectionArgs = {
   where?: InputMaybe<PageManyWhereInput>;
 };
 
-export type MutationUnpublishNavItemArgs = {
+export type MutationUnpublishNavigationArgs = {
   from?: Array<Stage>;
-  where: NavItemWhereUniqueInput;
+  where: NavigationWhereUniqueInput;
 };
 
 export type MutationUnpublishPageArgs = {
@@ -1807,6 +2375,11 @@ export type MutationUpdateAssetArgs = {
 export type MutationUpdateChapterArgs = {
   data: ChapterUpdateInput;
   where: ChapterWhereUniqueInput;
+};
+
+export type MutationUpdateExternalLinkArgs = {
+  data: ExternalLinkUpdateInput;
+  where: ExternalLinkWhereUniqueInput;
 };
 
 export type MutationUpdateManyAssetsArgs = {
@@ -1839,19 +2412,34 @@ export type MutationUpdateManyChaptersConnectionArgs = {
   where?: InputMaybe<ChapterManyWhereInput>;
 };
 
-export type MutationUpdateManyNavItemsArgs = {
-  data: NavItemUpdateManyInput;
-  where?: InputMaybe<NavItemManyWhereInput>;
+export type MutationUpdateManyExternalLinksArgs = {
+  data: ExternalLinkUpdateManyInput;
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
 };
 
-export type MutationUpdateManyNavItemsConnectionArgs = {
+export type MutationUpdateManyExternalLinksConnectionArgs = {
   after?: InputMaybe<Scalars["ID"]>;
   before?: InputMaybe<Scalars["ID"]>;
-  data: NavItemUpdateManyInput;
+  data: ExternalLinkUpdateManyInput;
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
   skip?: InputMaybe<Scalars["Int"]>;
-  where?: InputMaybe<NavItemManyWhereInput>;
+  where?: InputMaybe<ExternalLinkManyWhereInput>;
+};
+
+export type MutationUpdateManyNavigationsArgs = {
+  data: NavigationUpdateManyInput;
+  where?: InputMaybe<NavigationManyWhereInput>;
+};
+
+export type MutationUpdateManyNavigationsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>;
+  before?: InputMaybe<Scalars["ID"]>;
+  data: NavigationUpdateManyInput;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<NavigationManyWhereInput>;
 };
 
 export type MutationUpdateManyPagesArgs = {
@@ -1869,9 +2457,9 @@ export type MutationUpdateManyPagesConnectionArgs = {
   where?: InputMaybe<PageManyWhereInput>;
 };
 
-export type MutationUpdateNavItemArgs = {
-  data: NavItemUpdateInput;
-  where: NavItemWhereUniqueInput;
+export type MutationUpdateNavigationArgs = {
+  data: NavigationUpdateInput;
+  where: NavigationWhereUniqueInput;
 };
 
 export type MutationUpdatePageArgs = {
@@ -1894,9 +2482,14 @@ export type MutationUpsertChapterArgs = {
   where: ChapterWhereUniqueInput;
 };
 
-export type MutationUpsertNavItemArgs = {
-  upsert: NavItemUpsertInput;
-  where: NavItemWhereUniqueInput;
+export type MutationUpsertExternalLinkArgs = {
+  upsert: ExternalLinkUpsertInput;
+  where: ExternalLinkWhereUniqueInput;
+};
+
+export type MutationUpsertNavigationArgs = {
+  upsert: NavigationUpsertInput;
+  where: NavigationWhereUniqueInput;
 };
 
 export type MutationUpsertPageArgs = {
@@ -1904,130 +2497,17 @@ export type MutationUpsertPageArgs = {
   where: PageWhereUniqueInput;
 };
 
-export type NavItem = Node & {
-  __typename?: "NavItem";
-  /** The time the document was created */
-  createdAt: Scalars["DateTime"];
-  /** User that created this document */
-  createdBy?: Maybe<User>;
-  /** Get the document in other stages */
-  documentInStages: Array<NavItem>;
-  /** List of NavItem versions */
-  history: Array<Version>;
-  /** The unique identifier */
-  id: Scalars["ID"];
-  linkTo: Array<NavItemItem>;
-  /** The time the document was published. Null on documents in draft stage. */
-  publishedAt?: Maybe<Scalars["DateTime"]>;
-  /** User that last published this document */
-  publishedBy?: Maybe<User>;
-  scheduledIn: Array<ScheduledOperation>;
-  /** System stage field */
-  stage: Stage;
-  /** The time the document was updated */
-  updatedAt: Scalars["DateTime"];
-  /** User that last updated this document */
-  updatedBy?: Maybe<User>;
-};
-
-export type NavItemCreatedByArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-export type NavItemDocumentInStagesArgs = {
-  includeCurrent?: Scalars["Boolean"];
-  inheritLocale?: Scalars["Boolean"];
-  stages?: Array<Stage>;
-};
-
-export type NavItemHistoryArgs = {
-  limit?: Scalars["Int"];
-  skip?: Scalars["Int"];
-  stageOverride?: InputMaybe<Stage>;
-};
-
-export type NavItemLinkToArgs = {
-  after?: InputMaybe<Scalars["String"]>;
-  before?: InputMaybe<Scalars["String"]>;
-  first?: InputMaybe<Scalars["Int"]>;
-  last?: InputMaybe<Scalars["Int"]>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars["Int"]>;
-};
-
-export type NavItemPublishedByArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-export type NavItemScheduledInArgs = {
-  after?: InputMaybe<Scalars["String"]>;
-  before?: InputMaybe<Scalars["String"]>;
-  first?: InputMaybe<Scalars["Int"]>;
-  last?: InputMaybe<Scalars["Int"]>;
-  locales?: InputMaybe<Array<Locale>>;
-  skip?: InputMaybe<Scalars["Int"]>;
-  where?: InputMaybe<ScheduledOperationWhereInput>;
-};
-
-export type NavItemUpdatedByArgs = {
-  locales?: InputMaybe<Array<Locale>>;
-};
-
-export type NavItemConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: NavItemWhereUniqueInput;
-};
-
-/** A connection to a list of items. */
-export type NavItemConnection = {
-  __typename?: "NavItemConnection";
-  aggregate: Aggregate;
-  /** A list of edges. */
-  edges: Array<NavItemEdge>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type NavItemCreateInput = {
-  createdAt?: InputMaybe<Scalars["DateTime"]>;
-  linkTo?: InputMaybe<NavItemItemCreateManyInlineInput>;
-  updatedAt?: InputMaybe<Scalars["DateTime"]>;
-};
-
-export type NavItemCreateManyInlineInput = {
-  /** Connect multiple existing NavItem documents */
-  connect?: InputMaybe<Array<NavItemWhereUniqueInput>>;
-  /** Create and connect multiple existing NavItem documents */
-  create?: InputMaybe<Array<NavItemCreateInput>>;
-};
-
-export type NavItemCreateOneInlineInput = {
-  /** Connect one existing NavItem document */
-  connect?: InputMaybe<NavItemWhereUniqueInput>;
-  /** Create and connect one NavItem document */
-  create?: InputMaybe<NavItemCreateInput>;
-};
-
-/** An edge in a connection. */
-export type NavItemEdge = {
-  __typename?: "NavItemEdge";
-  /** A cursor for use in pagination. */
-  cursor: Scalars["String"];
-  /** The item at the end of the edge. */
-  node: NavItem;
-};
-
-export type NavItemItem = Chapter | Page;
+export type NavItemItem = Chapter | ExternalLink | Page;
 
 export type NavItemItemConnectInput = {
   Chapter?: InputMaybe<ChapterConnectInput>;
+  ExternalLink?: InputMaybe<ExternalLinkConnectInput>;
   Page?: InputMaybe<PageConnectInput>;
 };
 
 export type NavItemItemCreateInput = {
   Chapter?: InputMaybe<ChapterCreateInput>;
+  ExternalLink?: InputMaybe<ExternalLinkCreateInput>;
   Page?: InputMaybe<PageCreateInput>;
 };
 
@@ -2047,6 +2527,7 @@ export type NavItemItemCreateOneInlineInput = {
 
 export type NavItemItemUpdateInput = {
   Chapter?: InputMaybe<ChapterUpdateInput>;
+  ExternalLink?: InputMaybe<ExternalLinkUpdateInput>;
   Page?: InputMaybe<PageUpdateInput>;
 };
 
@@ -2069,6 +2550,7 @@ export type NavItemItemUpdateManyInlineInput = {
 
 export type NavItemItemUpdateManyWithNestedWhereInput = {
   Chapter?: InputMaybe<ChapterUpdateManyWithNestedWhereInput>;
+  ExternalLink?: InputMaybe<ExternalLinkUpdateManyWithNestedWhereInput>;
   Page?: InputMaybe<PageUpdateManyWithNestedWhereInput>;
 };
 
@@ -2089,32 +2571,151 @@ export type NavItemItemUpdateOneInlineInput = {
 
 export type NavItemItemUpdateWithNestedWhereUniqueInput = {
   Chapter?: InputMaybe<ChapterUpdateWithNestedWhereUniqueInput>;
+  ExternalLink?: InputMaybe<ExternalLinkUpdateWithNestedWhereUniqueInput>;
   Page?: InputMaybe<PageUpdateWithNestedWhereUniqueInput>;
 };
 
 export type NavItemItemUpsertWithNestedWhereUniqueInput = {
   Chapter?: InputMaybe<ChapterUpsertWithNestedWhereUniqueInput>;
+  ExternalLink?: InputMaybe<ExternalLinkUpsertWithNestedWhereUniqueInput>;
   Page?: InputMaybe<PageUpsertWithNestedWhereUniqueInput>;
 };
 
 export type NavItemItemWhereInput = {
   Chapter?: InputMaybe<ChapterWhereInput>;
+  ExternalLink?: InputMaybe<ExternalLinkWhereInput>;
   Page?: InputMaybe<PageWhereInput>;
 };
 
 export type NavItemItemWhereUniqueInput = {
   Chapter?: InputMaybe<ChapterWhereUniqueInput>;
+  ExternalLink?: InputMaybe<ExternalLinkWhereUniqueInput>;
   Page?: InputMaybe<PageWhereUniqueInput>;
 };
 
+export type Navigation = Node & {
+  __typename?: "Navigation";
+  /** The time the document was created */
+  createdAt: Scalars["DateTime"];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<Navigation>;
+  /** List of Navigation versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars["ID"];
+  linkTo: Array<NavItemItem>;
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars["DateTime"]>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars["DateTime"];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+export type NavigationCreatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type NavigationDocumentInStagesArgs = {
+  includeCurrent?: Scalars["Boolean"];
+  inheritLocale?: Scalars["Boolean"];
+  stages?: Array<Stage>;
+};
+
+export type NavigationHistoryArgs = {
+  limit?: Scalars["Int"];
+  skip?: Scalars["Int"];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+export type NavigationLinkToArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars["Int"]>;
+};
+
+export type NavigationPublishedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type NavigationScheduledInArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+export type NavigationUpdatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type NavigationConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: NavigationWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type NavigationConnection = {
+  __typename?: "NavigationConnection";
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<NavigationEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type NavigationCreateInput = {
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
+  linkTo?: InputMaybe<NavItemItemCreateManyInlineInput>;
+  updatedAt?: InputMaybe<Scalars["DateTime"]>;
+};
+
+export type NavigationCreateManyInlineInput = {
+  /** Connect multiple existing Navigation documents */
+  connect?: InputMaybe<Array<NavigationWhereUniqueInput>>;
+  /** Create and connect multiple existing Navigation documents */
+  create?: InputMaybe<Array<NavigationCreateInput>>;
+};
+
+export type NavigationCreateOneInlineInput = {
+  /** Connect one existing Navigation document */
+  connect?: InputMaybe<NavigationWhereUniqueInput>;
+  /** Create and connect one Navigation document */
+  create?: InputMaybe<NavigationCreateInput>;
+};
+
+/** An edge in a connection. */
+export type NavigationEdge = {
+  __typename?: "NavigationEdge";
+  /** A cursor for use in pagination. */
+  cursor: Scalars["String"];
+  /** The item at the end of the edge. */
+  node: Navigation;
+};
+
 /** Identifies documents */
-export type NavItemManyWhereInput = {
+export type NavigationManyWhereInput = {
   /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<NavItemWhereInput>>;
+  AND?: InputMaybe<Array<NavigationWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<NavItemWhereInput>>;
+  NOT?: InputMaybe<Array<NavigationWhereInput>>;
   /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<NavItemWhereInput>>;
+  OR?: InputMaybe<Array<NavigationWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars["String"]>;
   createdAt?: InputMaybe<Scalars["DateTime"]>;
@@ -2189,7 +2790,7 @@ export type NavItemManyWhereInput = {
   updatedBy?: InputMaybe<UserWhereInput>;
 };
 
-export enum NavItemOrderByInput {
+export enum NavigationOrderByInput {
   CreatedAtAsc = "createdAt_ASC",
   CreatedAtDesc = "createdAt_DESC",
   IdAsc = "id_ASC",
@@ -2200,83 +2801,83 @@ export enum NavItemOrderByInput {
   UpdatedAtDesc = "updatedAt_DESC",
 }
 
-export type NavItemUpdateInput = {
+export type NavigationUpdateInput = {
   linkTo?: InputMaybe<NavItemItemUpdateManyInlineInput>;
 };
 
-export type NavItemUpdateManyInlineInput = {
-  /** Connect multiple existing NavItem documents */
-  connect?: InputMaybe<Array<NavItemConnectInput>>;
-  /** Create and connect multiple NavItem documents */
-  create?: InputMaybe<Array<NavItemCreateInput>>;
-  /** Delete multiple NavItem documents */
-  delete?: InputMaybe<Array<NavItemWhereUniqueInput>>;
-  /** Disconnect multiple NavItem documents */
-  disconnect?: InputMaybe<Array<NavItemWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing NavItem documents */
-  set?: InputMaybe<Array<NavItemWhereUniqueInput>>;
-  /** Update multiple NavItem documents */
-  update?: InputMaybe<Array<NavItemUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple NavItem documents */
-  upsert?: InputMaybe<Array<NavItemUpsertWithNestedWhereUniqueInput>>;
+export type NavigationUpdateManyInlineInput = {
+  /** Connect multiple existing Navigation documents */
+  connect?: InputMaybe<Array<NavigationConnectInput>>;
+  /** Create and connect multiple Navigation documents */
+  create?: InputMaybe<Array<NavigationCreateInput>>;
+  /** Delete multiple Navigation documents */
+  delete?: InputMaybe<Array<NavigationWhereUniqueInput>>;
+  /** Disconnect multiple Navigation documents */
+  disconnect?: InputMaybe<Array<NavigationWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing Navigation documents */
+  set?: InputMaybe<Array<NavigationWhereUniqueInput>>;
+  /** Update multiple Navigation documents */
+  update?: InputMaybe<Array<NavigationUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple Navigation documents */
+  upsert?: InputMaybe<Array<NavigationUpsertWithNestedWhereUniqueInput>>;
 };
 
-export type NavItemUpdateManyInput = {
+export type NavigationUpdateManyInput = {
   /** No fields in updateMany data input */
   _?: InputMaybe<Scalars["String"]>;
 };
 
-export type NavItemUpdateManyWithNestedWhereInput = {
+export type NavigationUpdateManyWithNestedWhereInput = {
   /** Update many input */
-  data: NavItemUpdateManyInput;
+  data: NavigationUpdateManyInput;
   /** Document search */
-  where: NavItemWhereInput;
+  where: NavigationWhereInput;
 };
 
-export type NavItemUpdateOneInlineInput = {
-  /** Connect existing NavItem document */
-  connect?: InputMaybe<NavItemWhereUniqueInput>;
-  /** Create and connect one NavItem document */
-  create?: InputMaybe<NavItemCreateInput>;
-  /** Delete currently connected NavItem document */
+export type NavigationUpdateOneInlineInput = {
+  /** Connect existing Navigation document */
+  connect?: InputMaybe<NavigationWhereUniqueInput>;
+  /** Create and connect one Navigation document */
+  create?: InputMaybe<NavigationCreateInput>;
+  /** Delete currently connected Navigation document */
   delete?: InputMaybe<Scalars["Boolean"]>;
-  /** Disconnect currently connected NavItem document */
+  /** Disconnect currently connected Navigation document */
   disconnect?: InputMaybe<Scalars["Boolean"]>;
-  /** Update single NavItem document */
-  update?: InputMaybe<NavItemUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single NavItem document */
-  upsert?: InputMaybe<NavItemUpsertWithNestedWhereUniqueInput>;
+  /** Update single Navigation document */
+  update?: InputMaybe<NavigationUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single Navigation document */
+  upsert?: InputMaybe<NavigationUpsertWithNestedWhereUniqueInput>;
 };
 
-export type NavItemUpdateWithNestedWhereUniqueInput = {
+export type NavigationUpdateWithNestedWhereUniqueInput = {
   /** Document to update */
-  data: NavItemUpdateInput;
+  data: NavigationUpdateInput;
   /** Unique document search */
-  where: NavItemWhereUniqueInput;
+  where: NavigationWhereUniqueInput;
 };
 
-export type NavItemUpsertInput = {
+export type NavigationUpsertInput = {
   /** Create document if it didn't exist */
-  create: NavItemCreateInput;
+  create: NavigationCreateInput;
   /** Update document if it exists */
-  update: NavItemUpdateInput;
+  update: NavigationUpdateInput;
 };
 
-export type NavItemUpsertWithNestedWhereUniqueInput = {
+export type NavigationUpsertWithNestedWhereUniqueInput = {
   /** Upsert data */
-  data: NavItemUpsertInput;
+  data: NavigationUpsertInput;
   /** Unique document search */
-  where: NavItemWhereUniqueInput;
+  where: NavigationWhereUniqueInput;
 };
 
 /** Identifies documents */
-export type NavItemWhereInput = {
+export type NavigationWhereInput = {
   /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<NavItemWhereInput>>;
+  AND?: InputMaybe<Array<NavigationWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<NavItemWhereInput>>;
+  NOT?: InputMaybe<Array<NavigationWhereInput>>;
   /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<NavItemWhereInput>>;
+  OR?: InputMaybe<Array<NavigationWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars["String"]>;
   createdAt?: InputMaybe<Scalars["DateTime"]>;
@@ -2351,8 +2952,8 @@ export type NavItemWhereInput = {
   updatedBy?: InputMaybe<UserWhereInput>;
 };
 
-/** References NavItem record uniquely */
-export type NavItemWhereUniqueInput = {
+/** References Navigation record uniquely */
+export type NavigationWhereUniqueInput = {
   id?: InputMaybe<Scalars["ID"]>;
 };
 
@@ -2378,7 +2979,7 @@ export type Page = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars["ID"];
-  navItem?: Maybe<NavItem>;
+  navItem?: Maybe<Navigation>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars["DateTime"]>;
   /** User that last published this document */
@@ -2473,7 +3074,7 @@ export type PageCreateInput = {
   chapter?: InputMaybe<ChapterCreateOneInlineInput>;
   content?: InputMaybe<Scalars["RichTextAST"]>;
   createdAt?: InputMaybe<Scalars["DateTime"]>;
-  navItem?: InputMaybe<NavItemCreateOneInlineInput>;
+  navItem?: InputMaybe<NavigationCreateOneInlineInput>;
   slug: Scalars["String"];
   title: Scalars["String"];
   updatedAt?: InputMaybe<Scalars["DateTime"]>;
@@ -2563,7 +3164,7 @@ export type PageManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars["ID"]>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars["ID"]>;
-  navItem?: InputMaybe<NavItemWhereInput>;
+  navItem?: InputMaybe<NavigationWhereInput>;
   publishedAt?: InputMaybe<Scalars["DateTime"]>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars["DateTime"]>;
@@ -2657,7 +3258,7 @@ export enum PageOrderByInput {
 export type PageUpdateInput = {
   chapter?: InputMaybe<ChapterUpdateOneInlineInput>;
   content?: InputMaybe<Scalars["RichTextAST"]>;
-  navItem?: InputMaybe<NavItemUpdateOneInlineInput>;
+  navItem?: InputMaybe<NavigationUpdateOneInlineInput>;
   slug?: InputMaybe<Scalars["String"]>;
   title?: InputMaybe<Scalars["String"]>;
 };
@@ -2773,7 +3374,7 @@ export type PageWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars["ID"]>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars["ID"]>;
-  navItem?: InputMaybe<NavItemWhereInput>;
+  navItem?: InputMaybe<NavigationWhereInput>;
   publishedAt?: InputMaybe<Scalars["DateTime"]>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars["DateTime"]>;
@@ -2880,14 +3481,22 @@ export type Query = {
   chapters: Array<Chapter>;
   /** Retrieve multiple chapters using the Relay connection interface */
   chaptersConnection: ChapterConnection;
-  /** Retrieve a single navItem */
-  navItem?: Maybe<NavItem>;
+  /** Retrieve a single externalLink */
+  externalLink?: Maybe<ExternalLink>;
   /** Retrieve document version */
-  navItemVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple navItems */
-  navItems: Array<NavItem>;
-  /** Retrieve multiple navItems using the Relay connection interface */
-  navItemsConnection: NavItemConnection;
+  externalLinkVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple externalLinks */
+  externalLinks: Array<ExternalLink>;
+  /** Retrieve multiple externalLinks using the Relay connection interface */
+  externalLinksConnection: ExternalLinkConnection;
+  /** Retrieve a single navigation */
+  navigation?: Maybe<Navigation>;
+  /** Retrieve document version */
+  navigationVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple navigations */
+  navigations: Array<Navigation>;
+  /** Retrieve multiple navigations using the Relay connection interface */
+  navigationsConnection: NavigationConnection;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Retrieve a single page */
@@ -2986,38 +3595,72 @@ export type QueryChaptersConnectionArgs = {
   where?: InputMaybe<ChapterWhereInput>;
 };
 
-export type QueryNavItemArgs = {
+export type QueryExternalLinkArgs = {
   locales?: Array<Locale>;
   stage?: Stage;
-  where: NavItemWhereUniqueInput;
+  where: ExternalLinkWhereUniqueInput;
 };
 
-export type QueryNavItemVersionArgs = {
+export type QueryExternalLinkVersionArgs = {
   where: VersionWhereInput;
 };
 
-export type QueryNavItemsArgs = {
+export type QueryExternalLinksArgs = {
   after?: InputMaybe<Scalars["String"]>;
   before?: InputMaybe<Scalars["String"]>;
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
   locales?: Array<Locale>;
-  orderBy?: InputMaybe<NavItemOrderByInput>;
+  orderBy?: InputMaybe<ExternalLinkOrderByInput>;
   skip?: InputMaybe<Scalars["Int"]>;
   stage?: Stage;
-  where?: InputMaybe<NavItemWhereInput>;
+  where?: InputMaybe<ExternalLinkWhereInput>;
 };
 
-export type QueryNavItemsConnectionArgs = {
+export type QueryExternalLinksConnectionArgs = {
   after?: InputMaybe<Scalars["String"]>;
   before?: InputMaybe<Scalars["String"]>;
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
   locales?: Array<Locale>;
-  orderBy?: InputMaybe<NavItemOrderByInput>;
+  orderBy?: InputMaybe<ExternalLinkOrderByInput>;
   skip?: InputMaybe<Scalars["Int"]>;
   stage?: Stage;
-  where?: InputMaybe<NavItemWhereInput>;
+  where?: InputMaybe<ExternalLinkWhereInput>;
+};
+
+export type QueryNavigationArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: NavigationWhereUniqueInput;
+};
+
+export type QueryNavigationVersionArgs = {
+  where: VersionWhereInput;
+};
+
+export type QueryNavigationsArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<NavigationOrderByInput>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  stage?: Stage;
+  where?: InputMaybe<NavigationWhereInput>;
+};
+
+export type QueryNavigationsConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]>;
+  before?: InputMaybe<Scalars["String"]>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<NavigationOrderByInput>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  stage?: Stage;
+  where?: InputMaybe<NavigationWhereInput>;
 };
 
 export type QueryNodeArgs = {
@@ -3254,7 +3897,8 @@ export type ScheduledOperationUpdatedByArgs = {
 export type ScheduledOperationAffectedDocument =
   | Asset
   | Chapter
-  | NavItem
+  | ExternalLink
+  | Navigation
   | Page;
 
 export type ScheduledOperationConnectInput = {
@@ -4641,8 +5285,8 @@ export type GetAllNavItemsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllNavItemsQuery = {
   __typename?: "Query";
-  navItems: Array<{
-    __typename?: "NavItem";
+  navigations: Array<{
+    __typename?: "Navigation";
     id: string;
     linkTo: Array<
       | {
@@ -4651,6 +5295,7 @@ export type GetAllNavItemsQuery = {
           slug: string;
           pages: Array<{ __typename?: "Page"; title: string; slug: string }>;
         }
+      | { __typename: "ExternalLink"; label: string; url: string }
       | { __typename: "Page"; title: string; slug: string }
     >;
   }>;
@@ -4658,7 +5303,7 @@ export type GetAllNavItemsQuery = {
 
 export const GetAllNavItemsDocument = gql`
   query GetAllNavItems {
-    navItems {
+    navigations(first: 1) {
       id
       linkTo {
         __typename
@@ -4673,6 +5318,10 @@ export const GetAllNavItemsDocument = gql`
             title
             slug
           }
+        }
+        ... on ExternalLink {
+          label
+          url
         }
       }
     }
