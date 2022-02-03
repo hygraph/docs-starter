@@ -5348,6 +5348,7 @@ export type GetPageQuery = {
   page?:
     | {
         __typename?: "Page";
+        title: string;
         chapter?: { __typename?: "Chapter"; slug: string } | null | undefined;
         content?:
           | { __typename?: "PageContentRichText"; json: any }
@@ -5420,6 +5421,7 @@ export const GetPageDocument = gql`
       chapter {
         slug
       }
+      title
       content {
         ... on PageContentRichText {
           json

@@ -1,10 +1,18 @@
-import { redirect, useLoaderData } from "remix";
+import { MetaFunction, redirect, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 
 import { getSdk } from "~/generated/schema.server";
 import type { GetPageQuery } from "~/generated/schema.server";
 import { graphcms } from "~/lib/graphcms.server";
-import { RichText } from "@graphcms/rich-text-react-renderer";
+import { RichTextView } from "~/components/rich-text-view";
+
+type LoaderData = GetPageQuery;
+
+export const meta: MetaFunction = ({ data }) => {
+  return {
+    title: data?.page?.title,
+  };
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { slug } = params;
@@ -32,10 +40,8 @@ export const loader: LoaderFunction = async ({ params }) => {
   };
 };
 
-type LoaderData = GetPageQuery;
-
 export default function PostRoute() {
   const data = useLoaderData<LoaderData>();
 
-  return <RichText content={data.page?.content?.json} />;
+  return <RichTextView page={data.page} />;
 }
