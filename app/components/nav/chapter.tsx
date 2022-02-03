@@ -1,4 +1,5 @@
 import urljoin from "url-join";
+import cc from "classcat";
 
 import type { NavChapterFragment } from "~/generated/schema.server";
 import { Link } from "~/components/link";
@@ -18,7 +19,13 @@ export function NavChapter(props: NavChapterFragment) {
             <li key={page.slug}>
               <Link
                 href={urljoin(chapterSlug, page.slug)}
-                className="block py-0.5 text-gray-700 hover:text-blue-700"
+                asNavLink
+                className={({ isActive }) =>
+                  cc([
+                    isActive ? "text-blue-700" : "text-gray-700",
+                    "block py-0.5 hover:text-blue-700",
+                  ])
+                }
               >
                 {page.title}
               </Link>

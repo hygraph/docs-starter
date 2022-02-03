@@ -15,7 +15,7 @@ function NavRenderer({ __typename, ...props }: NavRendererProps) {
   switch (__typename) {
     case "Chapter":
       return (
-        <div className="py-8">
+        <div className="py-6">
           <NavChapter {...(props as NavChapterFragment)} />
         </div>
       );

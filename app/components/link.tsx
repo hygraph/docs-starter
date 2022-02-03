@@ -1,6 +1,6 @@
 import { ReactNode, LinkHTMLAttributes } from "react";
-import { Link as RemixLink } from "remix";
-import type { LinkProps as RemixLinkProps } from "remix";
+import { Link as RemixLink, NavLink } from "remix";
+import type { NavLinkProps, LinkProps as RemixLinkProps } from "remix";
 
 const stripTrailingSlash = (href: string) => {
   if (href === `/`) return href;
@@ -8,12 +8,15 @@ const stripTrailingSlash = (href: string) => {
   return href.endsWith(`/`) ? href.slice(0, -1) : href;
 };
 
-export type LinkProps = LinkHTMLAttributes<HTMLAnchorElement> & {
+export type LinkProps = Partial<Omit<RemixLinkProps, "className" | "to">> & {
+  href: string;
   children: ReactNode;
   target?: string;
-} & Partial<RemixLinkProps>;
+  asNavLink?: boolean;
+  className?: NavLinkProps["className"];
+};
 
-export function Link({ href, children, ...props }: LinkProps) {
+export function Link({ href, children, asNavLink, ...props }: LinkProps) {
   if (!href) return null;
 
   const anchorLink = href.startsWith(`#`);
@@ -23,15 +26,23 @@ export function Link({ href, children, ...props }: LinkProps) {
       <a
         href={stripTrailingSlash(href)}
         {...(!anchorLink && { rel: `noopener noreferrer`, target: `_blank` })}
-        {...props}
+        {...(props as LinkHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
       </a>
     );
   }
 
+  if (asNavLink) {
+    return (
+      <NavLink {...props} to={stripTrailingSlash(href)}>
+        {children}
+      </NavLink>
+    );
+  }
+
   return (
-    <RemixLink to={stripTrailingSlash(href)} {...props}>
+    <RemixLink {...(props as RemixLinkProps)} to={stripTrailingSlash(href)}>
       {children}
     </RemixLink>
   );

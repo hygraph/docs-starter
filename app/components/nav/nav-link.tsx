@@ -1,4 +1,5 @@
 import { ExternalLinkIcon } from "@heroicons/react/outline";
+import cc from "classcat";
 
 import {
   NavExternalLinkFragment,
@@ -22,7 +23,13 @@ export function InternalLink(props: NavPageFragment) {
   return (
     <Link
       href={props.slug}
-      className="block py-0.5 text-gray-700 hover:text-blue-700"
+      asNavLink
+      className={({ isActive }) =>
+        cc([
+          isActive ? "text-blue-700" : "text-gray-700",
+          "block py-0.5 hover:text-blue-700",
+        ])
+      }
     >
       {props.title}
     </Link>
