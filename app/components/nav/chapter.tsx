@@ -10,7 +10,7 @@ export function NavChapter(props: NavChapterFragment) {
   return (
     <>
       <div className="mb-2">
-        <p className="font-semibold text-blue-700">{title}</p>
+        <p className="font-semibold text-gray-900">{title}</p>
       </div>
 
       {props.pages.length > 0 && (
