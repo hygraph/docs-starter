@@ -3,11 +3,6 @@ query GetPage($slug: String!) {
     chapter {
       slug
     }
-    title
-    content {
-      ... on PageContentRichText {
-        json
-      }
-    }
+    ...Page
   }
 }

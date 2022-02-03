@@ -1,88 +1,50 @@
+import { MetaFunction, useLoaderData } from "remix";
+import type { LoaderFunction } from "remix";
+
+import { getSdk } from "~/generated/schema.server";
+import type { GetPageQuery } from "~/generated/schema.server";
+import { graphcms } from "~/lib/graphcms.server";
+import { RichTextView } from "~/components/rich-text-view";
+
+type LoaderData = GetPageQuery;
+
+const fallbackContent = {
+  title: "GraphCMS Docs Starter",
+  content: {
+    json: {
+      children: [
+        {
+          type: "paragraph",
+          children: [
+            {
+              text: "Add a homepage in your GraphCMS project to replace this default view.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  return {
+    title: data?.page?.title,
+  };
+};
+
+export const loader: LoaderFunction = async () => {
+  const { GetPage } = getSdk(graphcms);
+  const { page } = await GetPage({
+    slug: "homepage",
+  });
+
+  return {
+    page: page || fallbackContent,
+  };
+};
+
 export default function Index() {
-  return (
-    <div>
-      <h1>Welcome to Remix</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>{" "}
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>{" "}
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo
-        diam nunc, id molestie erat sagittis varius. Phasellus ornare erat vitae
-        lacus sollicitudin iaculis. Aliquam maximus, est et venenatis euismod,
-        lacus metus elementum nunc, vitae fringilla risus dolor et quam.
-        Maecenas tincidunt orci tellus, a consequat ipsum euismod ac. Maecenas
-        suscipit sapien sed dui iaculis finibus. Aliquam ornare tristique ex,
-        non congue velit tristique vitae. In dapibus commodo nulla at efficitur.
-      </p>
-    </div>
-  );
+  const data = useLoaderData<LoaderData>();
+
+  return <RichTextView page={data.page} />;
 }

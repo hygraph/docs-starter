@@ -31,6 +31,7 @@ function NavRenderer({ __typename, ...props }: NavRendererProps) {
 export function Nav({ navigations }: GetAllNavItemsQuery) {
   return (
     <div>
+      <InternalLink title="Homepage" slug="/" id="homepage" />
       {navigations[0].linkTo.map((entry) => (
         <NavRenderer key={entry.id} {...entry} />
       ))}

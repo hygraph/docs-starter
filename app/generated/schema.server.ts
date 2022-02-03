@@ -5339,6 +5339,23 @@ export type GetFirstPageFromChapterQuery = {
     | undefined;
 };
 
+export type GetHomepageQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetHomepageQuery = {
+  __typename?: "Query";
+  page?:
+    | {
+        __typename?: "Page";
+        title: string;
+        content?:
+          | { __typename?: "PageContentRichText"; json: any }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
 export type GetPageQueryVariables = Exact<{
   slug: Scalars["String"];
 }>;
@@ -5355,6 +5372,15 @@ export type GetPageQuery = {
           | null
           | undefined;
       }
+    | null
+    | undefined;
+};
+
+export type PageFragment = {
+  __typename?: "Page";
+  title: string;
+  content?:
+    | { __typename?: "PageContentRichText"; json: any }
     | null
     | undefined;
 };
@@ -5382,6 +5408,16 @@ export const NavPageFragmentDoc = gql`
     id
     title
     slug
+  }
+`;
+export const PageFragmentDoc = gql`
+  fragment Page on Page {
+    title
+    content {
+      ... on PageContentRichText {
+        json
+      }
+    }
   }
 `;
 export const GetAllNavItemsDocument = gql`
@@ -5415,20 +5451,24 @@ export const GetFirstPageFromChapterDocument = gql`
     }
   }
 `;
+export const GetHomepageDocument = gql`
+  query GetHomepage {
+    page(where: { slug: "homepage" }) {
+      ...Page
+    }
+  }
+  ${PageFragmentDoc}
+`;
 export const GetPageDocument = gql`
   query GetPage($slug: String!) {
     page(where: { slug: $slug }) {
       chapter {
         slug
       }
-      title
-      content {
-        ... on PageContentRichText {
-          json
-        }
-      }
+      ...Page
     }
   }
+  ${PageFragmentDoc}
 `;
 
 export type SdkFunctionWrapper = <T>(
@@ -5469,6 +5509,19 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders }
           ),
         "GetFirstPageFromChapter"
+      );
+    },
+    GetHomepage(
+      variables?: GetHomepageQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<GetHomepageQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetHomepageQuery>(GetHomepageDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "GetHomepage"
       );
     },
     GetPage(
