@@ -1,4 +1,4 @@
-import { MetaFunction, useLoaderData } from "remix";
+import { json, MetaFunction, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 
 import { getSdk } from "~/generated/schema.server";
@@ -38,9 +38,16 @@ export const loader: LoaderFunction = async () => {
     slug: "homepage",
   });
 
-  return {
-    page: page || fallbackContent,
-  };
+  return json(
+    {
+      page,
+    },
+    {
+      headers: {
+        "cache-control": "max-age=180",
+      },
+    }
+  );
 };
 
 export default function Index() {

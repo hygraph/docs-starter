@@ -1,4 +1,4 @@
-import { MetaFunction, redirect, useLoaderData } from "remix";
+import { json, MetaFunction, redirect, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 
 import { getSdk } from "~/generated/schema.server";
@@ -35,9 +35,16 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw redirect(`/404`);
   }
 
-  return {
-    page,
-  };
+  return json(
+    {
+      page,
+    },
+    {
+      headers: {
+        "cache-control": "max-age=180",
+      },
+    }
+  );
 };
 
 export default function PostRoute() {

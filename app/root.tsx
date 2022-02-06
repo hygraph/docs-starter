@@ -1,4 +1,5 @@
 import {
+  json,
   Links,
   LiveReload,
   Meta,
@@ -29,7 +30,18 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async () => {
   const { GetAllNavItems } = getSdk(graphcms);
 
-  return GetAllNavItems();
+  const { navigations } = await GetAllNavItems();
+
+  return json(
+    {
+      navigations,
+    },
+    {
+      headers: {
+        "cache-control": "max-age=180",
+      },
+    }
+  );
 };
 
 function Document({ children }: { children: ReactNode }) {
