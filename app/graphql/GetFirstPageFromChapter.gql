@@ -1,0 +1,7 @@
+query GetFirstPageFromChapter($slug: String!) {
+  chapter(where: { slug: $slug }) {
+    pages(first: 1) {
+      slug
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { MetaFunction, useLoaderData } from "remix";
+import { redirect, useLoaderData, MetaFunction } from "remix";
 import type { LoaderFunction } from "remix";
 
 import { getSdk } from "~/generated/schema.server";
@@ -8,42 +8,35 @@ import { RichTextView } from "~/components/rich-text-view";
 
 type LoaderData = GetPageQuery;
 
-const fallbackContent = {
-  title: "GraphCMS Docs Starter",
-  content: {
-    json: {
-      children: [
-        {
-          type: "paragraph",
-          children: [
-            {
-              text: "Add a homepage in your GraphCMS project to replace this default view.",
-            },
-          ],
-        },
-      ],
-    },
-  },
-};
-
 export const meta: MetaFunction = ({ data }) => {
   return {
     title: data?.page?.title,
   };
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ params }) => {
+  const { chapter, slug } = params;
+
   const { GetPage } = getSdk(graphcms);
   const { page } = await GetPage({
-    slug: "homepage",
+    slug: slug as string,
   });
 
+  if (!page) {
+    throw redirect(`/404`);
+  }
+
+  // Checks if the page chapter is the same as the chapter slug from the params
+  if (chapter && slug && page.chapter?.slug !== chapter) {
+    throw redirect(`/404`);
+  }
+
   return {
-    page: page || fallbackContent,
+    page,
   };
 };
 
-export default function Index() {
+export default function PostRoute() {
   const data = useLoaderData<LoaderData>();
 
   return <RichTextView page={data.page} />;

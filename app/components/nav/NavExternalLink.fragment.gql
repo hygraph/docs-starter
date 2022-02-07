@@ -1,0 +1,5 @@
+fragment NavExternalLink on ExternalLink {
+  id
+  label
+  url
+}

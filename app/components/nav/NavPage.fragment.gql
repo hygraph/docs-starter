@@ -1,0 +1,5 @@
+fragment NavPage on Page {
+  id
+  title
+  slug
+}

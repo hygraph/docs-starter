@@ -1,0 +1,8 @@
+fragment Page on Page {
+  title
+  content {
+    ... on PageContentRichText {
+      json
+    }
+  }
+}

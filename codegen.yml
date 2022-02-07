@@ -8,6 +8,7 @@ generates:
       - typescript
       - typescript-operations
       - typescript-graphql-request
+      - fragment-matcher
 
 config:
   gqlImport: graphql-request#gql
