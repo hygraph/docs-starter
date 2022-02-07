@@ -4,18 +4,32 @@ import type { LoaderFunction } from "remix";
 import { getSdk } from "~/generated/schema.server";
 import type { GetPageQuery } from "~/generated/schema.server";
 import { graphcms } from "~/lib/graphcms.server";
-import { RichTextView } from "~/components/rich-text-view";
 import { Content } from "~/components/content";
+import { getDomainUrl, getSocialMetas, getUrl } from "~/utils/seo";
 
-type LoaderData = GetPageQuery;
-
-export const meta: MetaFunction = ({ data }) => {
-  return {
-    title: data?.page?.title,
+type LoaderData = GetPageQuery & {
+  requestInfo: {
+    origin: string;
+    path: string;
   };
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const meta: MetaFunction = ({ data }) => {
+  const requestInfo = (data as LoaderData | undefined)?.requestInfo;
+
+  const title = data?.page?.seo?.title ?? data?.page?.title;
+
+  return getSocialMetas({
+    title,
+    description: data?.page?.seo?.description as string,
+    origin: requestInfo?.origin,
+    url: getUrl(requestInfo),
+    noindex: data?.page?.seo?.noindex ?? false,
+    image: data?.page?.seo?.image?.url,
+  });
+};
+
+export const loader: LoaderFunction = async ({ params, request }) => {
   const { slug } = params;
 
   const { GetPage, GetFirstPageFromChapter } = getSdk(graphcms);
@@ -36,16 +50,13 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw redirect(`/404`);
   }
 
-  return json(
-    {
-      page,
+  return json({
+    page,
+    requestInfo: {
+      origin: getDomainUrl(request),
+      path: new URL(request.url).pathname,
     },
-    {
-      headers: {
-        "cache-control": "max-age=180",
-      },
-    }
-  );
+  });
 };
 
 export default function PostRoute() {

@@ -6,4 +6,12 @@ fragment Page on Page {
       json
     }
   }
+  seo {
+    title
+    description
+    noindex
+    image {
+      url
+    }
+  }
 }

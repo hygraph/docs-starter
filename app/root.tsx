@@ -18,38 +18,60 @@ import styles from "./tailwind.css";
 import { ReactNode } from "react";
 import { Header } from "./components/header";
 import { Nav } from "./components/nav";
+import { getDomainUrl, getSocialMetas, getUrl } from "./utils/seo";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+type LoaderData = GetAllNavItemsQuery & {
+  requestInfo: {
+    origin: string;
+    path: string;
+  };
 };
 
-export const loader: LoaderFunction = async () => {
+export const meta: MetaFunction = ({ data }) => {
+  const requestInfo = (data as LoaderData | undefined)?.requestInfo;
+
+  return {
+    viewport: "width=device-width,initial-scale=1,viewport-fit=cover",
+    "theme-color": "#1d4ed8",
+    ...getSocialMetas({
+      origin: requestInfo?.origin,
+      url: getUrl(requestInfo),
+    }),
+  };
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
   const { GetAllNavItems } = getSdk(graphcms);
 
   const { navigations } = await GetAllNavItems();
 
-  return json(
-    {
-      navigations,
+  return json({
+    navigations,
+    requestInfo: {
+      origin: getDomainUrl(request),
+      path: new URL(request.url).pathname,
     },
-    {
-      headers: {
-        "cache-control": "max-age=180",
-      },
-    }
-  );
+  });
 };
 
-function Document({ children }: { children: ReactNode }) {
+function Document({
+  children,
+  requestInfo,
+}: {
+  children: ReactNode;
+  requestInfo: LoaderData["requestInfo"];
+}) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+        <link rel="canonical" href={getUrl(requestInfo)} />
+
         <Meta />
         <Links />
       </head>
@@ -63,13 +85,13 @@ function Document({ children }: { children: ReactNode }) {
   );
 }
 
-function Layout({ navigations }: GetAllNavItemsQuery) {
+function Layout({ navigations }: LoaderData) {
   return (
     <>
       <Header navigations={navigations} />
 
       <div className="mx-auto max-w-7xl">
-        <div className="p-6 md:flex md:space-x-12 md:px-12 md:py-12">
+        <div className="p-6 text-blue-700 md:flex md:space-x-12 md:px-12 md:py-12">
           <nav className="sticky top-32 hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
             <Nav navigations={navigations} />
           </nav>
@@ -83,11 +105,11 @@ function Layout({ navigations }: GetAllNavItemsQuery) {
 }
 
 export default function App() {
-  const { navigations } = useLoaderData<GetAllNavItemsQuery>();
+  const { navigations, requestInfo } = useLoaderData<LoaderData>();
 
   return (
-    <Document>
-      <Layout navigations={navigations} />
+    <Document requestInfo={requestInfo}>
+      <Layout navigations={navigations} requestInfo={requestInfo} />
     </Document>
   );
 }

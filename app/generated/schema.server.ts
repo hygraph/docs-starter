@@ -6034,6 +6034,16 @@ export type GetPageQuery = {
           | { __typename?: "PageContentRichText"; json: any; markdown: string }
           | null
           | undefined;
+        seo?:
+          | {
+              __typename?: "Seo";
+              title?: string | null | undefined;
+              description?: string | null | undefined;
+              noindex?: boolean | null | undefined;
+              image?: { __typename?: "Asset"; url: string } | null | undefined;
+            }
+          | null
+          | undefined;
       }
     | null
     | undefined;
@@ -6044,6 +6054,16 @@ export type PageFragment = {
   title: string;
   content?:
     | { __typename?: "PageContentRichText"; json: any; markdown: string }
+    | null
+    | undefined;
+  seo?:
+    | {
+        __typename?: "Seo";
+        title?: string | null | undefined;
+        description?: string | null | undefined;
+        noindex?: boolean | null | undefined;
+        image?: { __typename?: "Asset"; url: string } | null | undefined;
+      }
     | null
     | undefined;
 };
@@ -6080,6 +6100,14 @@ export const PageFragmentDoc = gql`
       markdown
       ... on PageContentRichText {
         json
+      }
+    }
+    seo {
+      title
+      description
+      noindex
+      image {
+        url
       }
     }
   }
