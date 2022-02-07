@@ -1,9 +1,9 @@
-import { RichText } from "@graphcms/rich-text-react-renderer";
+import { RichText } from '@graphcms/rich-text-react-renderer';
 
-import type { GetPageQuery } from "~/generated/schema.server";
-import { Heading } from "./heading";
+import type { GetPageQuery } from '~/generated/schema.server';
+import { Heading } from './heading';
 
-type PageProps = GetPageQuery["page"];
+type PageProps = GetPageQuery['page'];
 
 export const RichTextView = ({ page }: { page: PageProps }) => {
   return (

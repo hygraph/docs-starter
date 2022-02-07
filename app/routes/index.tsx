@@ -1,11 +1,11 @@
-import { json, MetaFunction, useLoaderData } from "remix";
-import type { LoaderFunction } from "remix";
+import { json, MetaFunction, useLoaderData } from 'remix';
+import type { LoaderFunction } from 'remix';
 
-import { getSdk } from "~/generated/schema.server";
-import type { GetPageQuery } from "~/generated/schema.server";
-import { graphcms } from "~/lib/graphcms.server";
-import { Content } from "~/components/content";
-import { getDomainUrl, getSocialMetas, getUrl } from "~/utils/seo";
+import { getSdk } from '~/generated/schema.server';
+import type { GetPageQuery } from '~/generated/schema.server';
+import { graphcms } from '~/lib/graphcms.server';
+import { Content } from '~/components/content';
+import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 
 type LoaderData = GetPageQuery & {
   requestInfo: {
@@ -15,15 +15,15 @@ type LoaderData = GetPageQuery & {
 };
 
 const fallbackContent = {
-  title: "GraphCMS Docs Starter",
+  title: 'GraphCMS Docs Starter',
   content: {
     json: {
       children: [
         {
-          type: "paragraph",
+          type: 'paragraph',
           children: [
             {
-              text: "Add a homepage in your GraphCMS project to replace this default view.",
+              text: 'Add a homepage in your GraphCMS project to replace this default view.',
             },
           ],
         },
@@ -54,7 +54,7 @@ export const meta: MetaFunction = ({ data }: MetaFunctionData) => {
 export const loader: LoaderFunction = async ({ request }) => {
   const { GetPage } = getSdk(graphcms);
   const { page } = await GetPage({
-    slug: "homepage",
+    slug: 'homepage',
   });
 
   const requestInfo = {

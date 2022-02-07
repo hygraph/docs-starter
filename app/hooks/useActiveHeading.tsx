@@ -1,10 +1,10 @@
-import { RefObject, useEffect, useState, useCallback } from "react";
-import throttle from "lodash.throttle";
-import { useEvent } from "react-use";
+import { RefObject, useEffect, useState, useCallback } from 'react';
+import throttle from 'lodash.throttle';
+import { useEvent } from 'react-use';
 
 const accumulateOffsetTop = (
   el: HTMLHeadingElement,
-  totalOffset = 0
+  totalOffset = 0,
 ): number => {
   while (el) {
     totalOffset += el.offsetTop - el.scrollTop + el.clientTop;
@@ -58,12 +58,12 @@ export function useActiveHeading({ ref, links }: UseActiveHeadingProps) {
           });
 
           setActiveHeading(
-            activeIndex === -1 ? links.length - 1 : activeIndex - 1
+            activeIndex === -1 ? links.length - 1 : activeIndex - 1,
           );
         }
       }
     }, 200),
-    [nodes]
+    [nodes],
   );
 
   useEvent(`scroll`, scrollHandler, window, { capture: true });

@@ -7,21 +7,21 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-} from "remix";
-import type { MetaFunction, LoaderFunction } from "remix";
+} from 'remix';
+import type { MetaFunction, LoaderFunction } from 'remix';
 
-import { graphcms } from "~/lib/graphcms.server";
-import { getSdk } from "~/generated/schema.server";
-import type { GetAllNavItemsQuery } from "~/generated/schema.server";
+import { graphcms } from '~/lib/graphcms.server';
+import { getSdk } from '~/generated/schema.server';
+import type { GetAllNavItemsQuery } from '~/generated/schema.server';
 
-import styles from "./tailwind.css";
-import { ReactNode } from "react";
-import { Header } from "./components/header";
-import { Nav } from "./components/nav";
-import { getDomainUrl, getSocialMetas, getUrl } from "./utils/seo";
+import styles from './tailwind.css';
+import { ReactNode } from 'react';
+import { Header } from './components/header';
+import { Nav } from './components/nav';
+import { getDomainUrl, getSocialMetas, getUrl } from './utils/seo';
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [{ rel: 'stylesheet', href: styles }];
 }
 
 type LoaderData = GetAllNavItemsQuery & {
@@ -35,8 +35,8 @@ export const meta: MetaFunction = ({ data }) => {
   const requestInfo = (data as LoaderData | undefined)?.requestInfo;
 
   return {
-    viewport: "width=device-width,initial-scale=1,viewport-fit=cover",
-    "theme-color": "#1d4ed8",
+    viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
+    'theme-color': '#1d4ed8',
     ...getSocialMetas({
       origin: requestInfo?.origin,
       url: getUrl(requestInfo),
@@ -63,7 +63,7 @@ function Document({
   requestInfo,
 }: {
   children: ReactNode;
-  requestInfo: LoaderData["requestInfo"];
+  requestInfo: LoaderData['requestInfo'];
 }) {
   return (
     <html lang="en">
@@ -79,7 +79,7 @@ function Document({
         {children}
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
   );

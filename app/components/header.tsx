@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
-import { Link, useLocation } from "remix";
-import { Popover } from "@headlessui/react";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import cc from "classcat";
+import { useEffect, useRef } from 'react';
+import { Link, useLocation } from 'remix';
+import { Popover } from '@headlessui/react';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import cc from 'classcat';
 
-import { Logo } from "~/components/logo";
-import { GetAllNavItemsQuery } from "~/generated/schema.server";
-import { Nav } from "~/components/nav";
+import { Logo } from '~/components/logo';
+import { GetAllNavItemsQuery } from '~/generated/schema.server';
+import { Nav } from '~/components/nav';
 
 export function Header({ navigations }: GetAllNavItemsQuery) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -24,8 +24,8 @@ export function Header({ navigations }: GetAllNavItemsQuery) {
         className={({ open }) =>
           cc([
             open
-              ? "fixed inset-0 z-40 overflow-y-auto bg-white"
-              : "bg-blue-700",
+              ? 'fixed inset-0 z-40 overflow-y-auto bg-white'
+              : 'bg-blue-700',
           ])
         }
       >

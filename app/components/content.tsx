@@ -1,14 +1,14 @@
-import { useRef } from "react";
-import { ClientOnly } from "remix-utils";
-import cc from "classcat";
+import { useRef } from 'react';
+import { ClientOnly } from 'remix-utils';
+import cc from 'classcat';
 
-import type { GetPageQuery } from "~/generated/schema.server";
-import { useMarkdownHeadings } from "~/hooks/useMarkdownHeadings";
+import type { GetPageQuery } from '~/generated/schema.server';
+import { useMarkdownHeadings } from '~/hooks/useMarkdownHeadings';
 
-type PageProps = GetPageQuery["page"];
+type PageProps = GetPageQuery['page'];
 
-import { RichTextView } from "./rich-text-view";
-import { TableOfContents } from "./table-of-contents";
+import { RichTextView } from './rich-text-view';
+import { TableOfContents } from './table-of-contents';
 
 export function Content({ page }: { page: PageProps }) {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ export function Content({ page }: { page: PageProps }) {
     <div className="flex items-start">
       <div
         ref={contentRef}
-        className={cc([hasLinks && "max-w-[720px] md:pr-12"])}
+        className={cc([hasLinks && 'max-w-[720px] md:pr-12'])}
       >
         <RichTextView page={page} />
       </div>

@@ -1,11 +1,11 @@
-import { json, MetaFunction, redirect, useLoaderData } from "remix";
-import type { LoaderFunction } from "remix";
+import { json, MetaFunction, redirect, useLoaderData } from 'remix';
+import type { LoaderFunction } from 'remix';
 
-import { getSdk } from "~/generated/schema.server";
-import type { GetPageQuery } from "~/generated/schema.server";
-import { graphcms } from "~/lib/graphcms.server";
-import { Content } from "~/components/content";
-import { getDomainUrl, getSocialMetas, getUrl } from "~/utils/seo";
+import { getSdk } from '~/generated/schema.server';
+import type { GetPageQuery } from '~/generated/schema.server';
+import { graphcms } from '~/lib/graphcms.server';
+import { Content } from '~/components/content';
+import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 
 type LoaderData = GetPageQuery & {
   requestInfo: {

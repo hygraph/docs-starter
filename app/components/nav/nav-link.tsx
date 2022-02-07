@@ -1,11 +1,11 @@
-import { ExternalLinkIcon } from "@heroicons/react/outline";
-import cc from "classcat";
+import { ExternalLinkIcon } from '@heroicons/react/outline';
+import cc from 'classcat';
 
 import {
   NavExternalLinkFragment,
   NavPageFragment,
-} from "~/generated/schema.server";
-import { Link } from "~/components/link";
+} from '~/generated/schema.server';
+import { Link } from '~/components/link';
 
 export function ExternalLink(props: NavExternalLinkFragment) {
   return (
@@ -26,8 +26,8 @@ export function InternalLink(props: NavPageFragment) {
       asNavLink
       className={({ isActive }) =>
         cc([
-          isActive ? "text-blue-700" : "text-gray-700",
-          "block py-0.5 hover:text-blue-700",
+          isActive ? 'text-blue-700' : 'text-gray-700',
+          'block py-0.5 hover:text-blue-700',
         ])
       }
     >

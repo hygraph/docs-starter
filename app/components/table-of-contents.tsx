@@ -1,8 +1,8 @@
-import { ReactNode, RefObject } from "react";
-import cc from "classcat";
+import { ReactNode, RefObject } from 'react';
+import cc from 'classcat';
 
-import { useActiveHeading } from "~/hooks/useActiveHeading";
-import { slugify } from "~/utils/slugify";
+import { useActiveHeading } from '~/hooks/useActiveHeading';
+import { slugify } from '~/utils/slugify';
 
 type LabelProps = {
   children: ReactNode;

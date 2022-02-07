@@ -1,6 +1,6 @@
 overwrite: true
 schema: ${GRAPHCMS_ENDPOINT}
-documents: "./app/**/*.{gql,graphql,ts,tsx}"
+documents: './app/**/*.{gql,graphql,ts,tsx}'
 
 generates:
   ./app/generated/schema.server.ts:
