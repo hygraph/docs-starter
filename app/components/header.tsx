@@ -4,7 +4,7 @@ import { Popover } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import cc from "classcat";
 
-import { GraphCMSLogo } from "~/components/graphcms-logo";
+import { Logo } from "~/components/logo";
 import { GetAllNavItemsQuery } from "~/generated/schema.server";
 import { Nav } from "~/components/nav";
 
@@ -33,7 +33,7 @@ export function Header({ navigations }: GetAllNavItemsQuery) {
           <>
             <div className="mx-auto flex max-w-7xl items-center justify-between bg-blue-700 px-6 py-4 md:px-12 md:py-5">
               <Link to="/" className="block w-full">
-                <GraphCMSLogo className="inline-block max-w-[140px] text-white" />
+                <Logo className="inline-block max-w-[140px] text-white" />
               </Link>
 
               <div className="flex flex-shrink-0 items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
