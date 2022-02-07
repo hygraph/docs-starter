@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "remix-app-template",
-  "description": "",
-  "license": "",
+  "name": "graphcms-docs-starter",
+  "description": "Docs Starter built with Remix and powered by GraphCMS",
+  "license": "MIT",
   "scripts": {
     "build": "npm run build:css && remix build",
     "build:css": "tailwindcss -o ./app/tailwind.css",
