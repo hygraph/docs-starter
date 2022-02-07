@@ -4,7 +4,7 @@ import type { LoaderFunction } from "remix";
 import { getSdk } from "~/generated/schema.server";
 import type { GetPageQuery } from "~/generated/schema.server";
 import { graphcms } from "~/lib/graphcms.server";
-import { RichTextView } from "~/components/rich-text-view";
+import { Content } from "~/components/content";
 
 type LoaderData = GetPageQuery;
 
@@ -53,5 +53,5 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const data = useLoaderData<LoaderData>();
 
-  return <RichTextView page={data.page} />;
+  return <Content page={data.page} />;
 }

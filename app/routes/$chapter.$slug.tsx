@@ -5,6 +5,7 @@ import { getSdk } from "~/generated/schema.server";
 import type { GetPageQuery } from "~/generated/schema.server";
 import { graphcms } from "~/lib/graphcms.server";
 import { RichTextView } from "~/components/rich-text-view";
+import { Content } from "~/components/content";
 
 type LoaderData = GetPageQuery;
 
@@ -46,5 +47,5 @@ export const loader: LoaderFunction = async ({ params }) => {
 export default function PostRoute() {
   const data = useLoaderData<LoaderData>();
 
-  return <RichTextView page={data.page} />;
+  return <Content page={data.page} />;
 }

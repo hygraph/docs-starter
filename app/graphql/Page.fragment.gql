@@ -1,6 +1,7 @@
 fragment Page on Page {
   title
   content {
+    markdown
     ... on PageContentRichText {
       json
     }
