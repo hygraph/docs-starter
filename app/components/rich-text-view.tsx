@@ -18,6 +18,17 @@ export const RichTextView = ({ page }: { page: PageProps }) => {
           h4: ({ children }) => <Heading as="h4">{children}</Heading>,
           h5: ({ children }) => <Heading as="h5">{children}</Heading>,
           h6: ({ children }) => <Heading as="h6">{children}</Heading>,
+          img: ({ height, width, src, title, altText }) => (
+            <img
+              src={src}
+              alt={altText}
+              width={width}
+              height={height}
+              title={title}
+              loading="lazy"
+              className="shadow-image"
+            />
+          ),
         }}
       />
     </div>
