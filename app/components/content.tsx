@@ -20,7 +20,10 @@ export function Content({ page }: { page: PageProps }) {
 
   return (
     <div className="flex items-start">
-      <div ref={contentRef} className={cc([hasLinks && "max-w-[720px] pr-12"])}>
+      <div
+        ref={contentRef}
+        className={cc([hasLinks && "max-w-[720px] md:pr-12"])}
+      >
         <RichTextView page={page} />
       </div>
 
@@ -30,7 +33,7 @@ export function Content({ page }: { page: PageProps }) {
             contentRef={contentRef}
             links={links}
             labelText="Table of Contents"
-            className="sticky top-32"
+            className="sticky top-32 hidden md:block"
           />
         </ClientOnly>
       )}

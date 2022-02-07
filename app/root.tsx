@@ -66,10 +66,11 @@ function Document({ children }: { children: ReactNode }) {
 function Layout({ navigations }: GetAllNavItemsQuery) {
   return (
     <>
-      <Header />
+      <Header navigations={navigations} />
+
       <div className="mx-auto max-w-7xl">
         <div className="p-6 md:flex md:space-x-12 md:px-12 md:py-12">
-          <nav className="sticky top-32 h-full w-full flex-shrink-0 pb-6 md:w-52 md:pb-12">
+          <nav className="sticky top-32 hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
             <Nav navigations={navigations} />
           </nav>
           <main>

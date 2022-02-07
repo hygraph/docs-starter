@@ -11,7 +11,7 @@ type NavigationItem = GetAllNavItemsQuery["navigations"][0];
 
 type NavRendererProps = NavigationItem["linkTo"][0];
 
-function NavRenderer({ __typename, ...props }: NavRendererProps) {
+export function NavRenderer({ __typename, ...props }: NavRendererProps) {
   switch (__typename) {
     case "Chapter":
       return (
