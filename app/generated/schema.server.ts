@@ -3240,7 +3240,7 @@ export type PageContentRichText = {
   text: Scalars['String'];
 };
 
-export type PageContentRichTextEmbeddedTypes = Asset;
+export type PageContentRichTextEmbeddedTypes = Asset | Page;
 
 export type PageCreateInput = {
   chapter?: InputMaybe<ChapterCreateOneInlineInput>;
@@ -6031,7 +6031,20 @@ export type GetPageQuery = {
         title: string;
         chapter?: { __typename?: 'Chapter'; slug: string } | null | undefined;
         content?:
-          | { __typename?: 'PageContentRichText'; json: any; markdown: string }
+          | {
+              __typename?: 'PageContentRichText';
+              json: any;
+              markdown: string;
+              references: Array<
+                | {
+                    __typename?: 'Asset';
+                    id: string;
+                    url: string;
+                    mimeType?: string | null | undefined;
+                  }
+                | { __typename?: 'Page' }
+              >;
+            }
           | null
           | undefined;
         seo?:
@@ -6053,7 +6066,20 @@ export type PageFragment = {
   __typename?: 'Page';
   title: string;
   content?:
-    | { __typename?: 'PageContentRichText'; json: any; markdown: string }
+    | {
+        __typename?: 'PageContentRichText';
+        json: any;
+        markdown: string;
+        references: Array<
+          | {
+              __typename?: 'Asset';
+              id: string;
+              url: string;
+              mimeType?: string | null | undefined;
+            }
+          | { __typename?: 'Page' }
+        >;
+      }
     | null
     | undefined;
   seo?:
@@ -6100,6 +6126,13 @@ export const PageFragmentDoc = gql`
       markdown
       ... on PageContentRichText {
         json
+        references {
+          ... on Asset {
+            id
+            url
+            mimeType
+          }
+        }
       }
     }
     seo {
@@ -6231,7 +6264,7 @@ const result: PossibleTypesResultData = {
       'Seo',
       'User',
     ],
-    PageContentRichTextEmbeddedTypes: ['Asset'],
+    PageContentRichTextEmbeddedTypes: ['Asset', 'Page'],
     ScheduledOperationAffectedDocument: [
       'Asset',
       'Chapter',

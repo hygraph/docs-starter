@@ -4,6 +4,13 @@ fragment Page on Page {
     markdown
     ... on PageContentRichText {
       json
+      references {
+        ... on Asset {
+          id
+          url
+          mimeType
+        }
+      }
     }
   }
   seo {

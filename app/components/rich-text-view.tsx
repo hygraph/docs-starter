@@ -1,4 +1,5 @@
 import { RichText } from '@graphcms/rich-text-react-renderer';
+import { EmbedReferences } from '@graphcms/rich-text-types';
 
 import type { GetPageQuery } from '~/generated/schema.server';
 import { Heading } from './heading';
@@ -11,6 +12,7 @@ export const RichTextView = ({ page }: { page: PageProps }) => {
       <h1>{page?.title}</h1>
       <RichText
         content={page?.content?.json}
+        references={page?.content?.references as EmbedReferences}
         renderers={{
           h1: ({ children }) => <Heading as="h1">{children}</Heading>,
           h2: ({ children }) => <Heading as="h2">{children}</Heading>,
