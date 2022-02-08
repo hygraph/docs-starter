@@ -29,6 +29,7 @@ const fallbackContent = {
         },
       ],
     },
+    markdown: ``,
   },
 };
 
@@ -62,19 +63,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     path: new URL(request.url).pathname,
   };
 
-  if (!page) {
-    return json({
-      page: {
-        content: {
-          json: fallbackContent,
-        },
-      },
-      requestInfo,
-    });
-  }
-
   return json({
-    page,
+    page: page ? page : fallbackContent,
     requestInfo,
   });
 };
