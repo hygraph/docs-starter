@@ -6127,9 +6127,6 @@ export const GetAllNavItemsDocument = gql`
         ... on ExternalLink {
           ...NavExternalLink
         }
-        ... on ExternalLink {
-          ...NavExternalLink
-        }
       }
     }
   }

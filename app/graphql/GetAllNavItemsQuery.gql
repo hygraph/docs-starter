@@ -12,9 +12,6 @@ query GetAllNavItems {
       ... on ExternalLink {
         ...NavExternalLink
       }
-      ... on ExternalLink {
-        ...NavExternalLink
-      }
     }
   }
 }
