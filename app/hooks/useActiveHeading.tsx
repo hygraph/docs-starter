@@ -1,72 +1,71 @@
-import { RefObject, useEffect, useState, useCallback } from 'react';
-import throttle from 'lodash.throttle';
-import { useEvent } from 'react-use';
+import { useEffect, useState, useRef } from 'react';
 
-const accumulateOffsetTop = (
-  el: HTMLHeadingElement,
-  totalOffset = 0,
-): number => {
-  while (el) {
-    totalOffset += el.offsetTop - el.scrollTop + el.clientTop;
-    el = el.offsetParent as HTMLHeadingElement;
-  }
+const TOP_OFFSET = 75;
 
-  return totalOffset;
-};
+export function getHeaderAnchors(): HTMLAnchorElement[] {
+  return Array.prototype.filter.call(
+    document.getElementsByClassName('anchor'),
+    function (testElement) {
+      return testElement.parentNode.nodeName === 'H2';
+    },
+  );
+}
 
-type UseActiveHeadingProps = {
-  links: {
-    title: string;
-    depth: number;
-  }[];
-  ref: RefObject<HTMLElement>;
-};
-
-export function useActiveHeading({ ref, links }: UseActiveHeadingProps) {
-  const [activeHeading, setActiveHeading] = useState<number | null>(null);
-  const [nodes, setNodes] = useState<HTMLHeadingElement[]>([]);
+export function useActiveHeading() {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const allHeadings = ref.current?.querySelectorAll(`h2`);
-    const headingNodes = allHeadings ? Array.from(allHeadings) : [];
+    function updateActiveLink() {
+      const pageHeight = document.body.scrollHeight;
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const headersAnchors = getHeaderAnchors();
 
-    setNodes(headingNodes);
-    setActiveHeading(null);
-  }, [ref, links]);
-
-  const scrollHandler = useCallback(
-    throttle(() => {
-      if (nodes.length > 0) {
-        const offsets = nodes
-          .map((el) => {
-            const accumulatedOffset = accumulateOffsetTop(el);
-
-            if (accumulatedOffset > 0) return accumulatedOffset;
-
-            return null;
-          })
-          .filter(Boolean);
-
-        if (offsets.length > 0) {
-          const activeIndex = offsets.findIndex((offset) => {
-            if (offset) {
-              const position = window.scrollY + 0.8 * window.innerHeight;
-              return offset > position;
-            }
-
-            return false;
-          });
-
-          setActiveHeading(
-            activeIndex === -1 ? links.length - 1 : activeIndex - 1,
-          );
-        }
+      if (scrollPosition >= 0 && pageHeight - scrollPosition <= TOP_OFFSET) {
+        // Scrolled to bottom of page.
+        setCurrentIndex(headersAnchors.length - 1);
+        return;
       }
-    }, 200),
-    [nodes],
-  );
 
-  useEvent(`scroll`, scrollHandler, window, { capture: true });
+      let index = -1;
+      while (index < headersAnchors.length - 1) {
+        const headerAnchor = headersAnchors[index + 1];
+        const { top } = headerAnchor.getBoundingClientRect();
 
-  return { activeHeading };
+        if (top >= TOP_OFFSET) {
+          break;
+        }
+        index += 1;
+      }
+
+      setCurrentIndex(Math.max(index, 0));
+    }
+
+    function throttledUpdateActiveLink() {
+      if (timeoutRef.current === null) {
+        timeoutRef.current = window.setTimeout(() => {
+          timeoutRef.current = null;
+          updateActiveLink();
+        }, 100);
+      }
+    }
+
+    document.addEventListener('scroll', throttledUpdateActiveLink);
+    document.addEventListener('resize', throttledUpdateActiveLink);
+
+    updateActiveLink();
+
+    return () => {
+      if (timeoutRef.current != null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      document.removeEventListener('scroll', throttledUpdateActiveLink);
+      document.removeEventListener('resize', throttledUpdateActiveLink);
+    };
+  }, []);
+
+  return {
+    currentIndex,
+  };
 }

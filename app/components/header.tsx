@@ -31,12 +31,14 @@ export function Header({ navigations }: GetAllNavItemsQuery) {
       >
         {({ open, close }) => (
           <>
-            <div className="mx-auto flex max-w-7xl items-center justify-between bg-blue-700 px-6 py-4 md:px-12 md:py-5">
-              <Link to="/" className="block w-full">
-                <Logo className="inline-block max-w-[140px] text-white" />
-              </Link>
+            <div className="mx-auto flex max-w-7xl items-center justify-between bg-blue-700 px-6 py-4 md:py-5 lg:px-12">
+              <div>
+                <Link to="/" className="block">
+                  <Logo className="inline-block w-full max-w-[140px] text-white" />
+                </Link>
+              </div>
 
-              <div className="flex flex-shrink-0 items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
+              <div className="flex flex-shrink-0 items-center lg:hidden">
                 <Popover.Button className="-mx-2 inline-flex items-center justify-center rounded-md p-2 text-white">
                   <span className="sr-only">Open menu</span>
                   {open ? (

@@ -72,5 +72,5 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Index() {
   const data = useLoaderData<LoaderData>();
 
-  return <Content page={data.page} />;
+  return <Content page={data.page} disableToc />;
 }

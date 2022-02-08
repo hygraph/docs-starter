@@ -26,27 +26,17 @@ type TOCProps = {
   labelText?: string;
 };
 
-export function TableOfContents({
-  links,
-  contentRef,
-  className,
-  labelText,
-}: TOCProps) {
-  const { activeHeading } = useActiveHeading({
-    ref: contentRef,
-    links,
-  });
+export function TableOfContents({ links, className, labelText }: TOCProps) {
+  const { currentIndex } = useActiveHeading();
 
   return (
-    <nav
-      className={cc([`relative w-full max-w-[200px] rounded-md`, className])}
-    >
+    <nav className={cc([`relative w-full rounded-md`, className])}>
       <Label>{labelText || `Table of contents`}</Label>
 
-      <ul className="w-full">
+      <ul className="w-full pl-2">
         {links.map(({ title }, index) => {
           const slug = slugify(title);
-          const isActive = activeHeading === index;
+          const isActive = currentIndex === index;
 
           return (
             <li

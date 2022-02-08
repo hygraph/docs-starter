@@ -95,7 +95,7 @@ function Layout({ navigations }: LoaderData) {
           <nav className="sticky top-32 hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
             <Nav navigations={navigations} />
           </nav>
-          <main>
+          <main className="w-full">
             <Outlet />
           </main>
         </div>
