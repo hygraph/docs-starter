@@ -8,6 +8,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     headers: {
       'Content-Type': 'application/xml',
       'Content-Length': String(Buffer.byteLength(sitemap)),
+      'cache-control': 'max-age=900',
     },
   });
 };
