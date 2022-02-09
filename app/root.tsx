@@ -92,10 +92,10 @@ function Layout({ navigations }: LoaderData) {
 
       <div className="mx-auto max-w-7xl">
         <div className="p-6 text-blue-700 md:flex md:space-x-12 md:px-12 md:py-12">
-          <nav className="sticky top-32 hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
+          <nav className="fixed top-[124px] hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
             <Nav navigations={navigations} />
           </nav>
-          <main className="w-full">
+          <main className="w-full md:pl-52">
             <Outlet />
           </main>
         </div>
