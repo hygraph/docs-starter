@@ -32,6 +32,14 @@ export const meta: MetaFunction = ({ data }) => {
 export const loader: LoaderFunction = async ({ params, request }) => {
   const { slug } = params;
 
+  // If slug is /homepage, redirect it to the index page to avoid duplicated pages
+  // Important for SEO
+  if (slug === `homepage`) {
+    throw redirect('/', {
+      status: 301,
+    });
+  }
+
   const { GetPage, GetFirstPageFromChapter } = getSdk(graphcms);
   const { page } = await GetPage({
     slug: slug as string,
