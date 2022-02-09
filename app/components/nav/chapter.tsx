@@ -1,8 +1,8 @@
-import urljoin from "url-join";
-import cc from "classcat";
+import urljoin from 'url-join';
+import cc from 'classcat';
 
-import type { NavChapterFragment } from "~/generated/schema.server";
-import { Link } from "~/components/link";
+import type { NavChapterFragment } from '~/generated/schema.server';
+import { Link } from '~/components/link';
 
 export function NavChapter(props: NavChapterFragment) {
   const { title, slug: chapterSlug } = props;
@@ -22,8 +22,8 @@ export function NavChapter(props: NavChapterFragment) {
                 asNavLink
                 className={({ isActive }) =>
                   cc([
-                    isActive ? "text-blue-700" : "text-gray-700",
-                    "block py-0.5 hover:text-blue-700",
+                    isActive ? 'text-blue-700' : 'text-gray-700',
+                    'block py-0.5 hover:text-blue-700',
                   ])
                 }
               >

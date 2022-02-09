@@ -1,8 +1,24 @@
 fragment Page on Page {
   title
   content {
+    markdown
     ... on PageContentRichText {
       json
+      references {
+        ... on Asset {
+          id
+          url
+          mimeType
+        }
+      }
+    }
+  }
+  seo {
+    title
+    description
+    noindex
+    image {
+      url
     }
   }
 }

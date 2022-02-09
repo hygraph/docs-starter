@@ -1,4 +1,5 @@
 import {
+  json,
   Links,
   LiveReload,
   Meta,
@@ -6,38 +7,71 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-} from "remix";
-import type { MetaFunction, LoaderFunction } from "remix";
+} from 'remix';
+import type { MetaFunction, LoaderFunction } from 'remix';
 
-import { graphcms } from "~/lib/graphcms.server";
-import { getSdk } from "~/generated/schema.server";
-import type { GetAllNavItemsQuery } from "~/generated/schema.server";
+import { graphcms } from '~/lib/graphcms.server';
+import { getSdk } from '~/generated/schema.server';
+import type { GetAllNavItemsQuery } from '~/generated/schema.server';
 
-import styles from "./tailwind.css";
-import { ReactNode } from "react";
-import { Header } from "./components/header";
-import { Nav } from "./components/nav";
+import styles from './tailwind.css';
+import { ReactNode } from 'react';
+import { Header } from './components/header';
+import { Nav } from './components/nav';
+import { getDomainUrl, getSocialMetas, getUrl } from './utils/seo';
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [{ rel: 'stylesheet', href: styles }];
 }
 
-export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+type LoaderData = GetAllNavItemsQuery & {
+  requestInfo: {
+    origin: string;
+    path: string;
+  };
 };
 
-export const loader: LoaderFunction = async () => {
+export const meta: MetaFunction = ({ data }) => {
+  const requestInfo = (data as LoaderData | undefined)?.requestInfo;
+
+  return {
+    viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
+    'theme-color': '#1d4ed8',
+    ...getSocialMetas({
+      origin: requestInfo?.origin,
+      url: getUrl(requestInfo),
+    }),
+  };
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
   const { GetAllNavItems } = getSdk(graphcms);
 
-  return GetAllNavItems();
+  const { navigations } = await GetAllNavItems();
+
+  return json({
+    navigations,
+    requestInfo: {
+      origin: getDomainUrl(request),
+      path: new URL(request.url).pathname,
+    },
+  });
 };
 
-function Document({ children }: { children: ReactNode }) {
+function Document({
+  children,
+  requestInfo,
+}: {
+  children: ReactNode;
+  requestInfo: LoaderData['requestInfo'];
+}) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+        <link rel="canonical" href={getUrl(requestInfo)} />
+
         <Meta />
         <Links />
       </head>
@@ -45,22 +79,23 @@ function Document({ children }: { children: ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
   );
 }
 
-function Layout({ navigations }: GetAllNavItemsQuery) {
+function Layout({ navigations }: LoaderData) {
   return (
     <>
-      <Header />
-      <div className="mx-auto max-w-5xl">
-        <div className="p-6 md:flex md:space-x-12 md:px-12 md:py-12">
-          <nav className="sticky top-32 h-full w-full flex-shrink-0 pb-6 md:w-52 md:pb-12">
+      <Header navigations={navigations} />
+
+      <div className="mx-auto max-w-7xl">
+        <div className="p-6 text-blue-700 md:flex md:space-x-12 md:px-12 md:py-12">
+          <nav className="fixed top-[124px] hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
             <Nav navigations={navigations} />
           </nav>
-          <main>
+          <main className="w-full md:pl-52">
             <Outlet />
           </main>
         </div>
@@ -70,11 +105,11 @@ function Layout({ navigations }: GetAllNavItemsQuery) {
 }
 
 export default function App() {
-  const { navigations } = useLoaderData<GetAllNavItemsQuery>();
+  const { navigations, requestInfo } = useLoaderData<LoaderData>();
 
   return (
-    <Document>
-      <Layout navigations={navigations} />
+    <Document requestInfo={requestInfo}>
+      <Layout navigations={navigations} requestInfo={requestInfo} />
     </Document>
   );
 }

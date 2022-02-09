@@ -3,25 +3,25 @@ import type {
   NavChapterFragment,
   NavExternalLinkFragment,
   NavPageFragment,
-} from "~/generated/schema.server";
-import { NavChapter } from "./chapter";
-import { ExternalLink, InternalLink } from "./nav-link";
+} from '~/generated/schema.server';
+import { NavChapter } from './chapter';
+import { ExternalLink, InternalLink } from './nav-link';
 
-type NavigationItem = GetAllNavItemsQuery["navigations"][0];
+type NavigationItem = GetAllNavItemsQuery['navigations'][0];
 
-type NavRendererProps = NavigationItem["linkTo"][0];
+type NavRendererProps = NavigationItem['linkTo'][0];
 
-function NavRenderer({ __typename, ...props }: NavRendererProps) {
+export function NavRenderer({ __typename, ...props }: NavRendererProps) {
   switch (__typename) {
-    case "Chapter":
+    case 'Chapter':
       return (
         <div className="py-6">
           <NavChapter {...(props as NavChapterFragment)} />
         </div>
       );
-    case "ExternalLink":
+    case 'ExternalLink':
       return <ExternalLink {...(props as NavExternalLinkFragment)} />;
-    case "Page":
+    case 'Page':
       return <InternalLink {...(props as NavPageFragment)} />;
     default:
       return <></>;

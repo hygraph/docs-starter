@@ -1,0 +1,9 @@
+{
+  "automerge": false,
+  "extends": ["config:base", "schedule:weekly"],
+  "ignorePresets": [":semanticPrefixFixDepsChoreOthers"],
+  "major": {
+    "automerge": false
+  },
+  "semanticCommits": true
+}

@@ -1,6 +1,6 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
-export function GraphCMSLogo(props: SVGProps<SVGSVGElement>) {
+export function Logo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       fill="currentColor"

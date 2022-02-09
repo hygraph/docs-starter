@@ -1,6 +1,6 @@
-import { ReactNode, LinkHTMLAttributes } from "react";
-import { Link as RemixLink, NavLink } from "remix";
-import type { NavLinkProps, LinkProps as RemixLinkProps } from "remix";
+import { ReactNode, LinkHTMLAttributes } from 'react';
+import { Link as RemixLink, NavLink } from 'remix';
+import type { NavLinkProps, LinkProps as RemixLinkProps } from 'remix';
 
 const stripTrailingSlash = (href: string) => {
   if (href === `/`) return href;
@@ -8,12 +8,12 @@ const stripTrailingSlash = (href: string) => {
   return href.endsWith(`/`) ? href.slice(0, -1) : href;
 };
 
-export type LinkProps = Partial<Omit<RemixLinkProps, "className" | "to">> & {
+export type LinkProps = Partial<Omit<RemixLinkProps, 'className' | 'to'>> & {
   href: string;
   children: ReactNode;
   target?: string;
   asNavLink?: boolean;
-  className?: NavLinkProps["className"];
+  className?: NavLinkProps['className'];
 };
 
 export function Link({ href, children, asNavLink, ...props }: LinkProps) {

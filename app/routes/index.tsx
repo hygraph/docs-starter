@@ -1,50 +1,76 @@
-import { MetaFunction, useLoaderData } from "remix";
-import type { LoaderFunction } from "remix";
+import { json, MetaFunction, useLoaderData } from 'remix';
+import type { LoaderFunction } from 'remix';
 
-import { getSdk } from "~/generated/schema.server";
-import type { GetPageQuery } from "~/generated/schema.server";
-import { graphcms } from "~/lib/graphcms.server";
-import { RichTextView } from "~/components/rich-text-view";
+import { getSdk } from '~/generated/schema.server';
+import type { GetPageQuery } from '~/generated/schema.server';
+import { graphcms } from '~/lib/graphcms.server';
+import { Content } from '~/components/content';
+import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 
-type LoaderData = GetPageQuery;
+type LoaderData = GetPageQuery & {
+  requestInfo: {
+    origin: string;
+    path: string;
+  };
+};
 
 const fallbackContent = {
-  title: "GraphCMS Docs Starter",
+  title: 'GraphCMS Docs Starter',
   content: {
     json: {
       children: [
         {
-          type: "paragraph",
+          type: 'paragraph',
           children: [
             {
-              text: "Add a homepage in your GraphCMS project to replace this default view.",
+              text: 'Add a homepage in your GraphCMS project to replace this default view.',
             },
           ],
         },
       ],
     },
+    markdown: ``,
   },
 };
 
-export const meta: MetaFunction = ({ data }) => {
-  return {
-    title: data?.page?.title,
-  };
+type MetaFunctionData = {
+  data: GetPageQuery;
 };
 
-export const loader: LoaderFunction = async () => {
+export const meta: MetaFunction = ({ data }: MetaFunctionData) => {
+  const requestInfo = (data as LoaderData | undefined)?.requestInfo;
+
+  const title = data?.page?.seo?.title ?? data?.page?.title;
+
+  return getSocialMetas({
+    title,
+    description: data?.page?.seo?.description as string,
+    origin: requestInfo?.origin,
+    url: getUrl(requestInfo),
+    noindex: data?.page?.seo?.noindex ?? false,
+    image: data?.page?.seo?.image?.url,
+  });
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
   const { GetPage } = getSdk(graphcms);
   const { page } = await GetPage({
-    slug: "homepage",
+    slug: 'homepage',
   });
 
-  return {
-    page: page || fallbackContent,
+  const requestInfo = {
+    origin: getDomainUrl(request),
+    path: new URL(request.url).pathname,
   };
+
+  return json({
+    page: page ? page : fallbackContent,
+    requestInfo,
+  });
 };
 
 export default function Index() {
   const data = useLoaderData<LoaderData>();
 
-  return <RichTextView page={data.page} />;
+  return <Content page={data.page} disableToc />;
 }
