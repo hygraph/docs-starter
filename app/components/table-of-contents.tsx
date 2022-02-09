@@ -1,4 +1,5 @@
 import { ReactNode, RefObject } from 'react';
+import { Link } from 'remix';
 import cc from 'classcat';
 
 import { useActiveHeading } from '~/hooks/useActiveHeading';
@@ -47,16 +48,16 @@ export function TableOfContents({ links, className, labelText }: TOCProps) {
                 !isActive && `border-l border-gray-300`,
               ])}
             >
-              <a
+              <Link
                 className={cc([
                   `block h-full w-full py-2 px-4 text-[13px] leading-5 transition`,
                   isActive && `font-semibold text-gray-900`,
                   !isActive && `text-gray-700`,
                 ])}
-                href={`#${slug}`}
+                to={`#${slug}`}
               >
                 {title}
-              </a>
+              </Link>
             </li>
           );
         })}
