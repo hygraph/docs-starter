@@ -31,7 +31,9 @@ export function TableOfContents({ links, className, labelText }: TOCProps) {
   const { currentIndex } = useActiveHeading();
 
   return (
-    <nav className={cc([`relative w-full rounded-md`, className])}>
+    <nav
+      className={cc([`relative w-full max-w-[208px] rounded-md`, className])}
+    >
       <Label>{labelText || `Table of contents`}</Label>
 
       <ul className="w-full pl-2">
