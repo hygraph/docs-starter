@@ -6004,6 +6004,13 @@ export type GetAllNavItemsQuery = {
   }>;
 };
 
+export type GetAllPagesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllPagesQuery = {
+  __typename?: 'Query';
+  pages: Array<{ __typename?: 'Page'; slug: string; updatedAt: any }>;
+};
+
 export type GetFirstPageFromChapterQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
@@ -6167,6 +6174,14 @@ export const GetAllNavItemsDocument = gql`
   ${NavChapterFragmentDoc}
   ${NavExternalLinkFragmentDoc}
 `;
+export const GetAllPagesDocument = gql`
+  query GetAllPages {
+    pages {
+      slug
+      updatedAt
+    }
+  }
+`;
 export const GetFirstPageFromChapterDocument = gql`
   query GetFirstPageFromChapter($slug: String!) {
     chapter(where: { slug: $slug }) {
@@ -6212,6 +6227,19 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders },
           ),
         'GetAllNavItems',
+      );
+    },
+    GetAllPages(
+      variables?: GetAllPagesQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers'],
+    ): Promise<GetAllPagesQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetAllPagesQuery>(GetAllPagesDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetAllPages',
       );
     },
     GetFirstPageFromChapter(

@@ -1,0 +1,6 @@
+query GetAllPages {
+  pages {
+    slug
+    updatedAt
+  }
+}
