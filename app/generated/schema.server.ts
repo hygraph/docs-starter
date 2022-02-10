@@ -5983,6 +5983,20 @@ export type NavPageFragment = {
   slug: string;
 };
 
+export type EmbeddedAssetFragment = {
+  __typename?: 'Asset';
+  id: string;
+  url: string;
+  mimeType?: string | null | undefined;
+};
+
+export type EmbeddedPageFragment = {
+  __typename?: 'Page';
+  id: string;
+  slug: string;
+  title: string;
+};
+
 export type GetAllNavItemsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllNavItemsQuery = {
@@ -6049,7 +6063,12 @@ export type GetPageQuery = {
                     url: string;
                     mimeType?: string | null | undefined;
                   }
-                | { __typename?: 'Page' }
+                | {
+                    __typename?: 'Page';
+                    id: string;
+                    slug: string;
+                    title: string;
+                  }
               >;
             }
           | null
@@ -6084,7 +6103,7 @@ export type PageFragment = {
               url: string;
               mimeType?: string | null | undefined;
             }
-          | { __typename?: 'Page' }
+          | { __typename?: 'Page'; id: string; slug: string; title: string }
         >;
       }
     | null
@@ -6126,6 +6145,20 @@ export const NavPageFragmentDoc = gql`
     slug
   }
 `;
+export const EmbeddedAssetFragmentDoc = gql`
+  fragment EmbeddedAsset on Asset {
+    id
+    url
+    mimeType
+  }
+`;
+export const EmbeddedPageFragmentDoc = gql`
+  fragment EmbeddedPage on Page {
+    id
+    slug
+    title
+  }
+`;
 export const PageFragmentDoc = gql`
   fragment Page on Page {
     title
@@ -6134,11 +6167,8 @@ export const PageFragmentDoc = gql`
       ... on PageContentRichText {
         json
         references {
-          ... on Asset {
-            id
-            url
-            mimeType
-          }
+          ...EmbeddedAsset
+          ...EmbeddedPage
         }
       }
     }
@@ -6151,6 +6181,8 @@ export const PageFragmentDoc = gql`
       }
     }
   }
+  ${EmbeddedAssetFragmentDoc}
+  ${EmbeddedPageFragmentDoc}
 `;
 export const GetAllNavItemsDocument = gql`
   query GetAllNavItems {

@@ -1,0 +1,5 @@
+fragment EmbeddedPage on Page {
+  id
+  slug
+  title
+}

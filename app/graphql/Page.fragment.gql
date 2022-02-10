@@ -5,11 +5,9 @@ fragment Page on Page {
     ... on PageContentRichText {
       json
       references {
-        ... on Asset {
-          id
-          url
-          mimeType
-        }
+        ...EmbeddedAsset
+        # Custom embeds need added here on the union
+        ...EmbeddedPage
       }
     }
   }
