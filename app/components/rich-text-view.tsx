@@ -1,8 +1,13 @@
 import { RichText } from '@graphcms/rich-text-react-renderer';
-import { EmbedReferences } from '@graphcms/rich-text-types';
+import { EmbedReferences, EmbedProps } from '@graphcms/rich-text-types';
 
-import type { GetPageQuery } from '~/generated/schema.server';
+import type {
+  GetPageQuery,
+  Page,
+  EmbeddedPageFragment,
+} from '~/generated/schema.server';
 import { Heading } from './heading';
+import { Link } from './link';
 
 type PageProps = GetPageQuery['page'];
 
@@ -31,6 +36,17 @@ export const RichTextView = ({ page }: { page: PageProps }) => {
               className="shadow-image"
             />
           ),
+          embed: {
+            Page: ({ slug, title }: EmbedProps<EmbeddedPageFragment>) => (
+              <Link
+                href={`/${slug}`}
+                className="flex items-center justify-between rounded border border-gray-200 bg-white p-3 no-underline shadow-image md:p-6"
+              >
+                <span>{title}</span>
+                <span>&rarr;</span>
+              </Link>
+            ),
+          },
         }}
       />
     </div>
