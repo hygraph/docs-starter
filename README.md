@@ -14,4 +14,5 @@ To get started, check our [documentation](https://docs.withheadlesscms.com/getti
 - Table of Contents for docs pages
 - Render custom embeds using Rich Text Renderer
 - Styled using Tailwind CSS
+- Responsive and mobile-friendly
 - SEO support (Open Graph & Twitter tags, sitemap, etc.)
