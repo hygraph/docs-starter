@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { ClientOnly } from 'remix-utils';
-import cc from 'classcat';
 
 import type { GetPageQuery } from '~/generated/schema.server';
 import { useMarkdownHeadings } from '~/hooks/useMarkdownHeadings';
@@ -22,10 +21,7 @@ export function Content({ page, disableToc }: ContentProps) {
 
   return (
     <div className="flex items-start">
-      <div
-        ref={contentRef}
-        className={cc([hasLinks && 'max-w-[720px] lg:pr-12'])}
-      >
+      <div ref={contentRef} className="max-w-[720px] lg:pr-12">
         <RichTextView page={page} />
       </div>
 
