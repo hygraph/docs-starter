@@ -25,13 +25,13 @@ export function Header({ navigations }: GetAllNavItemsQuery) {
           cc([
             open
               ? 'fixed inset-0 z-40 overflow-y-auto bg-white'
-              : 'bg-blue-700',
+              : 'bg-indigo-700',
           ])
         }
       >
         {({ open, close }) => (
           <>
-            <div className="mx-auto flex max-w-7xl items-center justify-between bg-blue-700 px-6 py-4 md:py-5 lg:px-12">
+            <div className="mx-auto flex max-w-7xl items-center justify-between bg-indigo-700 px-6 py-4 md:py-5 lg:px-12">
               <div>
                 <Link to="/" className="block">
                   <Logo className="inline-block w-full max-w-[140px] text-white" />
