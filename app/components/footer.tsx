@@ -8,14 +8,14 @@ export function Footer() {
         <div className="flex items-center justify-between">
           <p>
             Docs Starter by{' '}
-            <Link href="https://graphcms.com" className="text-blue-700">
+            <Link href="https://graphcms.com" className="text-indigo-700">
               GraphCMS
             </Link>
           </p>
 
           <Link
             href="https://github.com/graphcms/docs-starter"
-            className="text-gray-500 hover:text-blue-700"
+            className="text-gray-500 hover:text-indigo-700"
           >
             <GitHub className="h-7 w-7" />
           </Link>

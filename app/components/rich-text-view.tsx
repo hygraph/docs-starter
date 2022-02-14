@@ -13,7 +13,7 @@ type PageProps = GetPageQuery['page'];
 
 export const RichTextView = ({ page }: { page: PageProps }) => {
   return (
-    <div className="prose prose-blue max-w-none prose-h1:font-light prose-h1:text-blue-700">
+    <div className="prose prose-blue max-w-none prose-h1:font-light prose-h1:text-indigo-700">
       <h1>{page?.title}</h1>
       <RichText
         content={page?.content?.json}

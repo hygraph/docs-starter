@@ -46,7 +46,7 @@ export function TableOfContents({ links, className, labelText }: TOCProps) {
               key={slug}
               className={cc([
                 `rounded-r transition`,
-                isActive && `bg-catskill-white border-l-2 border-blue-700`,
+                isActive && `bg-catskill-white border-l-2 border-indigo-700`,
                 !isActive && `border-l border-gray-300`,
               ])}
             >

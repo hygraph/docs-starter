@@ -22,8 +22,8 @@ export function NavChapter(props: NavChapterFragment) {
                 asNavLink
                 className={({ isActive }) =>
                   cc([
-                    isActive ? 'text-blue-700' : 'text-gray-700',
-                    'block py-0.5 hover:text-blue-700',
+                    isActive ? 'text-indigo-700' : 'text-gray-700',
+                    'block py-0.5 hover:text-indigo-700',
                   ])
                 }
               >
