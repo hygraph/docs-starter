@@ -76,7 +76,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body className="bg-gray-100">
+      <body>
         {children}
         <ScrollRestoration />
         <Scripts />
