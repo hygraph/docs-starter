@@ -17,6 +17,7 @@ import type { GetAllNavItemsQuery } from '~/generated/schema.server';
 import styles from './tailwind.css';
 import { ReactNode } from 'react';
 import { Header } from './components/header';
+import { Footer } from './components/footer';
 import { Nav } from './components/nav';
 import { getDomainUrl, getSocialMetas, getUrl } from './utils/seo';
 
@@ -90,16 +91,20 @@ function Layout({ navigations }: LoaderData) {
     <>
       <Header navigations={navigations} />
 
-      <div className="mx-auto max-w-7xl">
-        <div className="p-6 text-blue-700 md:flex md:space-x-12 md:px-12 md:py-12">
-          <nav className="fixed top-[124px] hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
-            <Nav navigations={navigations} />
-          </nav>
-          <main className="w-full md:pl-52">
-            <Outlet />
-          </main>
+      <div className="bg-white">
+        <div className="mx-auto max-w-7xl">
+          <div className="p-6 text-blue-700 md:flex md:space-x-12 md:px-12 md:py-12">
+            <nav className="fixed top-[124px] hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12">
+              <Nav navigations={navigations} />
+            </nav>
+            <main className="w-full md:pl-52">
+              <Outlet />
+            </main>
+          </div>
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
