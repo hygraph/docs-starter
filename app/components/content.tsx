@@ -21,7 +21,7 @@ export function Content({ page, disableToc }: ContentProps) {
 
   return (
     <div className="flex items-start">
-      <div ref={contentRef} className="max-w-[720px] lg:pr-12">
+      <div ref={contentRef} className="w-full max-w-[720px] lg:pr-12">
         <RichTextView page={page} />
       </div>
 
