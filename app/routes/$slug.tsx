@@ -45,11 +45,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const previewParam = requestUrl?.searchParams?.get('preview');
   const isInPreview = previewParam === process.env.PREVIEW_SECRET;
 
-  const API_TOKEN = isInPreview
-    ? process.env.GRAPHCMS_DEV_AUTH_TOKEN
-    : process.env.GRAPHCMS_PROD_AUTH_TOKEN;
-
-  graphcms.setHeader(`authorization`, `Bearer ${API_TOKEN}`);
+  if (isInPreview) {
+    graphcms.setHeader(
+      `authorization`,
+      `Bearer ${process.env.GRAPHCMS_PREVIEW_TOKEN}`,
+    );
+  }
 
   const { GetPage, GetFirstPageFromChapter } = getSdk(graphcms);
   const { page } = await GetPage({
