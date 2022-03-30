@@ -8,6 +8,7 @@ import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 
 type LoaderData = GetPageQuery & {
+  isInPreview: boolean;
   requestInfo: {
     origin: string;
     path: string;
@@ -40,6 +41,16 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     });
   }
 
+  const requestUrl = new URL(request?.url);
+  const previewParam = requestUrl?.searchParams?.get('preview');
+  const isInPreview = previewParam === process.env.PREVIEW_SECRET;
+
+  const API_TOKEN = isInPreview
+    ? process.env.GRAPHCMS_DEV_AUTH_TOKEN
+    : process.env.GRAPHCMS_PROD_AUTH_TOKEN;
+
+  graphcms.setHeader(`authorization`, `Bearer ${API_TOKEN}`);
+
   const { GetPage, GetFirstPageFromChapter } = getSdk(graphcms);
   const { page } = await GetPage({
     slug: slug as string,
@@ -60,6 +71,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   return json({
     page,
+    isInPreview,
     requestInfo: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
@@ -70,5 +82,5 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export default function PostRoute() {
   const data = useLoaderData<LoaderData>();
 
-  return <Content page={data.page} />;
+  return <Content page={data.page} isInPreview={data.isInPreview} />;
 }
