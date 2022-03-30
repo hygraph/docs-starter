@@ -53,6 +53,17 @@ export const meta: MetaFunction = ({ data }: MetaFunctionData) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const requestUrl = new URL(request?.url);
+  const previewParam = requestUrl?.searchParams?.get('preview');
+  const isInPreview = previewParam === process.env.PREVIEW_SECRET;
+
+  if (isInPreview) {
+    graphcms.setHeader(
+      `authorization`,
+      `Bearer ${process.env.GRAPHCMS_PREVIEW_TOKEN}`,
+    );
+  }
+
   const { GetPage } = getSdk(graphcms);
   const { page } = await GetPage({
     slug: 'homepage',

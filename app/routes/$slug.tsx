@@ -8,7 +8,6 @@ import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 
 type LoaderData = GetPageQuery & {
-  isInPreview: boolean;
   requestInfo: {
     origin: string;
     path: string;
@@ -72,7 +71,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   return json({
     page,
-    isInPreview,
     requestInfo: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
@@ -83,5 +81,5 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export default function PostRoute() {
   const data = useLoaderData<LoaderData>();
 
-  return <Content page={data.page} isInPreview={data.isInPreview} />;
+  return <Content page={data.page} />;
 }
