@@ -22,6 +22,7 @@ import { Footer } from './components/footer';
 import { Nav } from './components/nav';
 import { getDomainUrl, getSocialMetas, getUrl } from './utils/seo';
 import { PreviewBanner } from './components/preview-banner';
+import { isPreviewMode } from './utils/preview-mode.server';
 
 export function links() {
   return [{ rel: 'stylesheet', href: styles }];
@@ -49,9 +50,7 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const requestUrl = new URL(request?.url);
-  const previewParam = requestUrl?.searchParams?.get('preview');
-  const isInPreview = previewParam === process.env.PREVIEW_SECRET;
+  const isInPreview = await isPreviewMode(request);
 
   if (isInPreview) {
     graphcms.setHeader(

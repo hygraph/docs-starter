@@ -5928,6 +5928,8 @@ export enum _MutationKind {
   DeleteMany = 'deleteMany',
   Publish = 'publish',
   PublishMany = 'publishMany',
+  SchedulePublish = 'schedulePublish',
+  ScheduleUnpublish = 'scheduleUnpublish',
   Unpublish = 'unpublish',
   UnpublishMany = 'unpublishMany',
   Update = 'update',
@@ -6050,6 +6052,7 @@ export type GetPageQuery = {
     | {
         __typename?: 'Page';
         title: string;
+        slug: string;
         chapter?: { __typename?: 'Chapter'; slug: string } | null | undefined;
         content?:
           | {
@@ -6091,6 +6094,7 @@ export type GetPageQuery = {
 export type PageFragment = {
   __typename?: 'Page';
   title: string;
+  slug: string;
   content?:
     | {
         __typename?: 'PageContentRichText';
@@ -6162,6 +6166,7 @@ export const EmbeddedPageFragmentDoc = gql`
 export const PageFragmentDoc = gql`
   fragment Page on Page {
     title
+    slug
     content {
       markdown
       ... on PageContentRichText {

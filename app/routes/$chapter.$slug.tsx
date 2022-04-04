@@ -6,6 +6,7 @@ import type { GetPageQuery } from '~/generated/schema.server';
 import { graphcms } from '~/lib/graphcms.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
+import { isPreviewMode } from '~/utils/preview-mode.server';
 
 type LoaderData = GetPageQuery & {
   requestInfo: {
@@ -32,9 +33,7 @@ export const meta: MetaFunction = ({ data }) => {
 export const loader: LoaderFunction = async ({ params, request }) => {
   const { chapter, slug } = params;
 
-  const requestUrl = new URL(request?.url);
-  const previewParam = requestUrl?.searchParams?.get('preview');
-  const isInPreview = previewParam === process.env.PREVIEW_SECRET;
+  const isInPreview = await isPreviewMode(request);
 
   if (isInPreview) {
     graphcms.setHeader(

@@ -11,7 +11,10 @@ export function PreviewBanner() {
               DRAFT) &mdash;&nbsp;
             </span>
             <span className="block sm:ml-2 sm:inline-block">
-              <Link to="?" className="font-bold text-white underline">
+              <Link
+                to="/api/exit-preview"
+                className="font-bold text-white underline"
+              >
                 Exit Preview Mode <span aria-hidden="true">&rarr;</span>
               </Link>
             </span>
