@@ -11,8 +11,7 @@ import {
 import type { MetaFunction, LoaderFunction } from 'remix';
 import cc from 'classcat';
 
-import { graphcms, sdk } from '~/lib/graphcms.server';
-import { getSdk } from '~/generated/schema.server';
+import { sdk } from '~/lib/graphcms.server';
 import type { GetAllNavItemsQuery } from '~/generated/schema.server';
 
 import styles from './tailwind.css';

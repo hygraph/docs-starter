@@ -20,3 +20,4 @@ To get started, check our [documentation](https://docs.withheadlesscms.com/getti
 - Styled using Tailwind CSS
 - Responsive and mobile-friendly
 - SEO support (Open Graph & Twitter tags, sitemap, etc.)
+- Preview mode support

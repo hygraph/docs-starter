@@ -3,6 +3,7 @@ import { json, LoaderFunction, redirect } from 'remix';
 import { getSdk } from '~/generated/schema.server';
 import { graphcms } from '~/lib/graphcms.server';
 import { previewModeCookie } from '~/utils/preview-mode.server';
+import { parseCookie } from '~/utils/parse-cookie.server';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const requestUrl = new URL(request?.url);
@@ -27,9 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   // Enable preview by setting a cookie
-  const cookieHeader = request.headers.get('Cookie');
-  const cookie = (await previewModeCookie.parse(cookieHeader)) || {};
-
+  const cookie = await parseCookie(request, previewModeCookie);
   cookie.preview = true;
 
   return redirect(`/${page.slug}`, {
