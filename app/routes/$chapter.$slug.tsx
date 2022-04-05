@@ -1,9 +1,8 @@
 import { redirect, useLoaderData, MetaFunction, json } from 'remix';
 import type { LoaderFunction } from 'remix';
 
-import { getSdk } from '~/generated/schema.server';
 import type { GetPageQuery } from '~/generated/schema.server';
-import { graphcms } from '~/lib/graphcms.server';
+import { sdk } from '~/lib/graphcms.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { isPreviewMode } from '~/utils/preview-mode.server';
@@ -34,15 +33,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const { chapter, slug } = params;
 
   const isInPreview = await isPreviewMode(request);
-
-  if (isInPreview) {
-    graphcms.setHeader(
-      `authorization`,
-      `Bearer ${process.env.GRAPHCMS_PREVIEW_TOKEN}`,
-    );
-  }
-
-  const { GetPage } = await getSdk(graphcms);
+  const { GetPage } = await sdk({ preview: isInPreview });
 
   const { page } = await GetPage({
     slug: slug as string,

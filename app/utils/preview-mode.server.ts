@@ -1,4 +1,5 @@
 import { createCookie } from 'remix';
+import { parseCookie } from './parse-cookie.server';
 
 export const previewModeCookie = createCookie('preview-mode', {
   path: '/',
@@ -8,8 +9,7 @@ export const previewModeCookie = createCookie('preview-mode', {
 });
 
 export async function isPreviewMode(request: Request) {
-  const cookieHeader = request.headers.get('Cookie');
-  const cookie = (await previewModeCookie.parse(cookieHeader)) || {};
+  const cookie = await parseCookie(request, previewModeCookie);
 
   return cookie.preview;
 }

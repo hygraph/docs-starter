@@ -11,7 +11,7 @@ import {
 import type { MetaFunction, LoaderFunction } from 'remix';
 import cc from 'classcat';
 
-import { graphcms } from '~/lib/graphcms.server';
+import { graphcms, sdk } from '~/lib/graphcms.server';
 import { getSdk } from '~/generated/schema.server';
 import type { GetAllNavItemsQuery } from '~/generated/schema.server';
 
@@ -51,15 +51,7 @@ export const meta: MetaFunction = ({ data }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const isInPreview = await isPreviewMode(request);
-
-  if (isInPreview) {
-    graphcms.setHeader(
-      `authorization`,
-      `Bearer ${process.env.GRAPHCMS_PREVIEW_TOKEN}`,
-    );
-  }
-
-  const { GetAllNavItems } = getSdk(graphcms);
+  const { GetAllNavItems } = await sdk({ preview: isInPreview });
 
   const { navigations } = await GetAllNavItems();
 
