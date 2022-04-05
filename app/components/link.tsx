@@ -17,8 +17,6 @@ export type LinkProps = Partial<Omit<RemixLinkProps, 'className' | 'to'>> & {
 };
 
 export function Link({ href, children, asNavLink, ...props }: LinkProps) {
-  if (!href) return null;
-
   const anchorLink = href.startsWith(`#`);
 
   if (href.includes(`http`) || href.includes(`mailto`) || anchorLink) {

@@ -1,5 +1,6 @@
 fragment Page on Page {
   title
+  slug
   content {
     markdown
     ... on PageContentRichText {

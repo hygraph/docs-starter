@@ -18,7 +18,7 @@ export function Header({ navigations }: GetAllNavItemsQuery) {
   }, [location]);
 
   return (
-    <div className="sticky top-0 z-50">
+    <div>
       <Popover
         as="header"
         className={({ open }) =>

@@ -1,11 +1,11 @@
 import { redirect, useLoaderData, MetaFunction, json } from 'remix';
 import type { LoaderFunction } from 'remix';
 
-import { getSdk } from '~/generated/schema.server';
 import type { GetPageQuery } from '~/generated/schema.server';
-import { graphcms } from '~/lib/graphcms.server';
+import { sdk } from '~/lib/graphcms.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
+import { isPreviewMode } from '~/utils/preview-mode.server';
 
 type LoaderData = GetPageQuery & {
   requestInfo: {
@@ -32,7 +32,9 @@ export const meta: MetaFunction = ({ data }) => {
 export const loader: LoaderFunction = async ({ params, request }) => {
   const { chapter, slug } = params;
 
-  const { GetPage } = getSdk(graphcms);
+  const isInPreview = await isPreviewMode(request);
+  const { GetPage } = await sdk({ preview: isInPreview });
+
   const { page } = await GetPage({
     slug: slug as string,
   });
