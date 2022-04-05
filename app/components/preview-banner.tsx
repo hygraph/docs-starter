@@ -1,5 +1,3 @@
-import { Link } from 'remix';
-
 export function PreviewBanner() {
   return (
     <div className="w-full bg-indigo-600">
@@ -11,12 +9,14 @@ export function PreviewBanner() {
               DRAFT) &mdash;&nbsp;
             </span>
             <span className="block sm:ml-2 sm:inline-block">
-              <Link
-                to="/api/exit-preview"
-                className="font-bold text-white underline"
-              >
-                Exit Preview Mode <span aria-hidden="true">&rarr;</span>
-              </Link>
+              <form action="/api/exit-preview" method="post">
+                <button
+                  type="submit"
+                  className="font-bold text-white underline"
+                >
+                  Exit Preview Mode <span aria-hidden="true">&rarr;</span>
+                </button>
+              </form>
             </span>
           </p>
         </div>
