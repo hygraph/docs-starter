@@ -1,7 +1,6 @@
 import { json, LoaderFunction, redirect } from 'remix';
 
-import { getSdk } from '~/generated/schema.server';
-import { graphcms } from '~/lib/graphcms.server';
+import { sdk } from '~/lib/graphcms.server';
 import { previewModeCookie } from '~/utils/preview-mode.server';
 import { parseCookie } from '~/utils/parse-cookie.server';
 
@@ -16,7 +15,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   // Check if the provided `slug` exists
-  const { GetPage } = await getSdk(graphcms);
+  const { GetPage } = await sdk({ preview: true });
 
   const { page } = await GetPage({
     slug,
