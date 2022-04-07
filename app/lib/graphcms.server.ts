@@ -11,12 +11,11 @@ export function sdk({
 }: {
   preview?: boolean;
 }): ReturnType<typeof getSdk> {
-  if (preview) {
-    graphcms.setHeader(
-      `authorization`,
-      `Bearer ${process.env.GRAPHCMS_PREVIEW_TOKEN}`,
-    );
-  }
+  const API_TOKEN = preview
+    ? process.env.GRAPHCMS_DEV_TOKEN
+    : process.env.GRAPHCMS_PROD_TOKEN;
+
+  graphcms.setHeader(`authorization`, `Bearer ${API_TOKEN}`);
 
   try {
     return getSdk(graphcms);
