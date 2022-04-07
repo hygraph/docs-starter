@@ -33,8 +33,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const { chapter, slug } = params;
 
   const isInPreview = await isPreviewMode(request);
-  const { GetPage } = await sdk({ preview: isInPreview });
 
+  const { GetPage } = await sdk({ preview: isInPreview });
   const { page } = await GetPage({
     slug: slug as string,
   });

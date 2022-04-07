@@ -45,7 +45,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const { GetPage, GetFirstPageFromChapter } = await sdk({
     preview: isInPreview,
   });
-
   const { page } = await GetPage({
     slug: slug as string,
   });

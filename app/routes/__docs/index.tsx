@@ -54,10 +54,10 @@ export const meta: MetaFunction = ({ data }: MetaFunctionData) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const isInPreview = await isPreviewMode(request);
+
   const { GetPage } = await sdk({
     preview: isInPreview,
   });
-
   const { page } = await GetPage({
     slug: 'homepage',
   });

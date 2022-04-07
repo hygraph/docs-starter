@@ -10,7 +10,7 @@ export const loader: LoaderFunction = async () => {
 
 export const action: ActionFunction = async ({ request }) => {
   const cookie = await parseCookie(request, previewModeCookie);
-  cookie.preview = false;
+  cookie.mode = 'normal';
 
   return redirect(`/`, {
     headers: {
