@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   // Enable preview by setting a cookie
   const cookie = await parseCookie(request, previewModeCookie);
-  cookie.preview = true;
+  cookie.stage = 'draft';
 
   return redirect(`/${page.slug}`, {
     headers: {
