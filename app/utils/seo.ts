@@ -27,8 +27,8 @@ export function getDomainUrl(request: Request) {
 
 export function getSocialMetas({
   url,
-  title = 'Docs Starter - GraphCMS',
-  description = 'Docs Starter built with Remix and powered by GraphCMS. No longer are you tied to markdown files, Git workflows, and writing documentation in your code editor.',
+  title = 'Docs Starter - Hygraph',
+  description = 'Docs Starter built with Remix and powered by Hygraph. No longer are you tied to markdown files, Git workflows, and writing documentation in your code editor.',
   noindex = false,
   image,
   origin,
@@ -54,8 +54,8 @@ export function getSocialMetas({
     'og:description': description,
     'og:type': 'website',
     'twitter:card': 'summary_large_image',
-    'twitter:creator': '@graphcms',
-    'twitter:site': '@graphcms',
+    'twitter:creator': '@hygraphcom',
+    'twitter:site': '@hygraphcom',
     'twitter:title': title,
     'twitter:image': parsedImage,
     'twitter:description': description,

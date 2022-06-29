@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "graphcms-docs-starter",
-  "description": "Docs Starter built with Remix and powered by GraphCMS",
+  "name": "hygraph-docs-starter",
+  "description": "Docs Starter built with Remix and powered by Hygraph",
   "license": "MIT",
   "scripts": {
     "build": "npm run build:css && remix build",

@@ -1,5 +1,5 @@
 import { getSdk } from '~/generated/schema.server';
-import { graphcms } from '~/lib/graphcms.server';
+import { hygraph } from '~/lib/hygraph.server';
 import { getDomainUrl, getUrl } from './seo';
 
 type SitemapEntry = {
@@ -17,7 +17,7 @@ type SitemapEntry = {
 };
 
 export async function getSitemapXml(request: Request) {
-  const { GetAllPages } = getSdk(graphcms);
+  const { GetAllPages } = getSdk(hygraph);
   const { pages } = await GetAllPages();
 
   const domainUrl = getDomainUrl(request);
