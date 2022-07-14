@@ -2,7 +2,7 @@ import { json, MetaFunction, redirect, useLoaderData } from 'remix';
 import type { LoaderFunction } from 'remix';
 
 import type { GetPageQuery } from '~/generated/schema.server';
-import { sdk } from '~/lib/graphcms.server';
+import { sdk } from '~/lib/hygraph.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { isPreviewMode } from '~/utils/preview-mode.server';

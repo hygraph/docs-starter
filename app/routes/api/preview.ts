@@ -1,6 +1,6 @@
 import { json, LoaderFunction, redirect } from 'remix';
 
-import { sdk } from '~/lib/graphcms.server';
+import { sdk } from '~/lib/hygraph.server';
 import { previewModeCookie } from '~/utils/preview-mode.server';
 import { parseCookie } from '~/utils/parse-cookie.server';
 

@@ -8,13 +8,13 @@ export function Footer() {
         <div className="flex items-center justify-between">
           <p>
             Docs Starter by{' '}
-            <Link href="https://graphcms.com" className="text-indigo-700">
-              GraphCMS
+            <Link href="https://hygraph.com" className="text-indigo-700">
+              Hygraph
             </Link>
           </p>
 
           <Link
-            href="https://github.com/graphcms/docs-starter"
+            href="https://github.com/hygraph/docs-starter"
             className="text-gray-500 hover:text-indigo-700"
           >
             <GitHub className="h-7 w-7" />

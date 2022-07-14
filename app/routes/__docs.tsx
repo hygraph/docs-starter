@@ -2,7 +2,7 @@ import { json, Outlet, useLoaderData } from 'remix';
 import type { MetaFunction, LoaderFunction } from 'remix';
 import cc from 'classcat';
 
-import { sdk } from '~/lib/graphcms.server';
+import { sdk } from '~/lib/hygraph.server';
 import type { GetAllNavItemsQuery } from '~/generated/schema.server';
 
 import { Header } from '~/components/header';

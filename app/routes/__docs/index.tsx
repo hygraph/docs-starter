@@ -2,7 +2,7 @@ import { json, MetaFunction, useLoaderData } from 'remix';
 import type { LoaderFunction } from 'remix';
 
 import type { GetPageQuery } from '~/generated/schema.server';
-import { sdk } from '~/lib/graphcms.server';
+import { sdk } from '~/lib/hygraph.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { isPreviewMode } from '~/utils/preview-mode.server';
@@ -15,7 +15,7 @@ type LoaderData = GetPageQuery & {
 };
 
 const fallbackContent = {
-  title: 'GraphCMS Docs Starter',
+  title: 'Hygraph Docs Starter',
   content: {
     json: {
       children: [
@@ -23,7 +23,7 @@ const fallbackContent = {
           type: 'paragraph',
           children: [
             {
-              text: 'Add a homepage in your GraphCMS project to replace this default view.',
+              text: 'Add a homepage in your Hygraph project to replace this default view.',
             },
           ],
         },
