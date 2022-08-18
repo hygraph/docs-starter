@@ -13,8 +13,8 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         fill="currentColor"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="m34.923 10-8.73 5-8.731 5-8.731 5v30l8.73-5 8.731-5V35l-8.73 5V30l8.73-5 8.731-5v30l-8.73 5-8.731 5-8.731 5L0 70l8.73 5 8.732-5 8.73-5 8.731-5 8.731-5V5l-8.731-5v10Z"
         fill="currentColor"
       />

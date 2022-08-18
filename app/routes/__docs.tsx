@@ -60,7 +60,7 @@ export default function Layout() {
         <Header navigations={navigations} />
       </div>
 
-      <div className="bg-white">
+      <div className="h-full bg-white">
         <div className="mx-auto max-w-7xl">
           <div className="p-6 text-indigo-700 md:flex md:space-x-12 md:px-12 md:py-12">
             <nav

@@ -12,7 +12,7 @@ import {
   useLoaderData,
 } from 'remix';
 
-import styles from '~/tailwind.css';
+import styles from '~/styles/tailwind.css';
 import { getUrl, getDomainUrl } from '~/utils/seo';
 
 type LoaderData = {
