@@ -3,7 +3,7 @@ import { GraphQLClient } from 'graphql-request';
 import { getSdk } from '~/generated/schema.server';
 
 export const hygraph = new GraphQLClient(
-  process.env.GRAPHCMS_ENDPOINT as string,
+  process.env.HYGRAPH_ENDPOINT as string,
 );
 
 export function sdk({
@@ -12,8 +12,8 @@ export function sdk({
   preview?: boolean;
 }): ReturnType<typeof getSdk> {
   const API_TOKEN = preview
-    ? process.env.GRAPHCMS_DEV_TOKEN
-    : process.env.GRAPHCMS_PROD_TOKEN;
+    ? process.env.HYGRAPH_DEV_TOKEN
+    : process.env.HYGRAPH_PROD_TOKEN;
 
   hygraph.setHeader(`authorization`, `Bearer ${API_TOKEN}`);
 
