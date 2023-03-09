@@ -1,4 +1,5 @@
-import { LoaderFunction } from 'remix';
+import type { LoaderFunction } from '@remix-run/node';
+
 import { getSitemapXml } from '~/utils/sitemap.server';
 
 export const loader: LoaderFunction = async ({ request }) => {

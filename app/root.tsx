@@ -1,46 +1,37 @@
 import { ReactNode } from 'react';
 import {
-  json,
   Links,
-  LinksFunction,
   LiveReload,
-  LoaderFunction,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
-} from 'remix';
+} from '@remix-run/react';
+import type { LinksFunction, LoaderArgs } from '@remix-run/node';
+import { typedjson, useTypedLoaderData } from 'remix-typedjson';
 
 import styles from '~/styles/tailwind.css';
 import { getUrl, getDomainUrl } from '~/utils/seo';
-
-type LoaderData = {
-  requestInfo: {
-    origin: string;
-    path: string;
-  };
-};
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }];
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return json({
+export async function loader({ request }: LoaderArgs) {
+  return typedjson({
     requestInfo: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
     },
   });
-};
+}
 
 function Document({
   children,
   requestInfo,
 }: {
   children: ReactNode;
-  requestInfo: LoaderData['requestInfo'];
+  requestInfo: { origin: string; path: string };
 }) {
   return (
     <html lang="en">
@@ -63,7 +54,7 @@ function Document({
 }
 
 export default function Root() {
-  const { requestInfo } = useLoaderData<LoaderData>();
+  const { requestInfo } = useTypedLoaderData<typeof loader>();
 
   return (
     <Document requestInfo={requestInfo}>

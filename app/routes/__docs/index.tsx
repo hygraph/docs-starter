@@ -1,21 +1,19 @@
-import { json, MetaFunction, useLoaderData } from 'remix';
-import type { LoaderFunction } from 'remix';
+import type { LoaderArgs } from '@remix-run/node';
+import {
+  typedjson,
+  TypedMetaFunction,
+  useTypedLoaderData,
+} from 'remix-typedjson';
 
-import type { GetPageQuery } from '~/generated/schema.server';
 import { sdk } from '~/lib/hygraph.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { isPreviewMode } from '~/utils/preview-mode.server';
+import { GetPageQuery } from '~/generated/schema.server';
 
-type LoaderData = GetPageQuery & {
-  requestInfo: {
-    origin: string;
-    path: string;
-  };
-};
-
-const fallbackContent = {
+const fallbackContent: GetPageQuery['page'] = {
   title: 'Hygraph Docs Starter',
+  slug: ``,
   content: {
     json: {
       children: [
@@ -29,16 +27,21 @@ const fallbackContent = {
         },
       ],
     },
+    references: [],
     markdown: ``,
+  },
+  seo: {
+    title: 'Hygraph Docs Starter',
+    description: `Docs Starter built with Remix and powered by Hygraph. No longer are you tied to markdown files, Git workflows, and writing documentation in your code editor.`,
+    noindex: false,
+    image: {
+      url: ``,
+    },
   },
 };
 
-type MetaFunctionData = {
-  data: GetPageQuery;
-};
-
-export const meta: MetaFunction = ({ data }: MetaFunctionData) => {
-  const requestInfo = (data as LoaderData | undefined)?.requestInfo;
+export const meta: TypedMetaFunction<typeof loader> = ({ data }) => {
+  const requestInfo = data?.requestInfo;
 
   const title = data?.page?.seo?.title ?? data?.page?.title;
 
@@ -52,7 +55,7 @@ export const meta: MetaFunction = ({ data }: MetaFunctionData) => {
   });
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const isInPreview = await isPreviewMode(request);
 
   const { GetPage } = await sdk({
@@ -67,14 +70,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     path: new URL(request.url).pathname,
   };
 
-  return json({
-    page: page ? page : fallbackContent,
+  return typedjson({
+    page: page ?? fallbackContent,
     requestInfo,
   });
-};
+}
 
 export default function Index() {
-  const data = useLoaderData<LoaderData>();
+  const data = useTypedLoaderData<typeof loader>();
 
   return <Content page={data.page} disableToc />;
 }

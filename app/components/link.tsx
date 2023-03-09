@@ -1,6 +1,9 @@
 import { ReactNode, LinkHTMLAttributes } from 'react';
-import { Link as RemixLink, NavLink } from 'remix';
-import type { NavLinkProps, LinkProps as RemixLinkProps } from 'remix';
+import { Link as RemixLink, NavLink } from '@remix-run/react';
+import type {
+  NavLinkProps,
+  LinkProps as RemixLinkProps,
+} from '@remix-run/react';
 
 const stripTrailingSlash = (href: string) => {
   if (href === `/`) return href;

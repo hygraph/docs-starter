@@ -1,5 +1,5 @@
-import { redirect } from 'remix';
-import type { ActionFunction, LoaderFunction } from 'remix';
+import { redirect } from '@remix-run/node';
+import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 
 import { parseCookie } from '~/utils/parse-cookie.server';
 import { previewModeCookie } from '~/utils/preview-mode.server';

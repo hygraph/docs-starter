@@ -27,12 +27,14 @@ export function Content({ page, disableToc }: ContentProps) {
 
       {hasLinks && !disableToc && (
         <ClientOnly>
-          <TableOfContents
-            contentRef={contentRef}
-            links={links}
-            labelText="Table of Contents"
-            className="sticky top-32 hidden lg:block"
-          />
+          {() => (
+            <TableOfContents
+              contentRef={contentRef}
+              links={links}
+              labelText="Table of Contents"
+              className="sticky top-32 hidden lg:block"
+            />
+          )}
         </ClientOnly>
       )}
     </div>

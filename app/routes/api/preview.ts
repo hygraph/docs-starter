@@ -1,4 +1,5 @@
-import { json, LoaderFunction, redirect } from 'remix';
+import { json, redirect } from '@remix-run/node';
+import type { LoaderFunction } from '@remix-run/node';
 
 import { sdk } from '~/lib/hygraph.server';
 import { previewModeCookie } from '~/utils/preview-mode.server';

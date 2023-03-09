@@ -1,4 +1,4 @@
-import { createCookie } from 'remix';
+import { createCookie } from '@remix-run/node';
 
 import { parseCookie } from '~/utils/parse-cookie.server';
 
