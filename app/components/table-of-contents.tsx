@@ -1,5 +1,5 @@
 import { ReactNode, RefObject } from 'react';
-import { Link } from 'remix';
+import { Link } from '@remix-run/react';
 import cc from 'classcat';
 
 import { useActiveHeading } from '~/hooks/useActiveHeading';

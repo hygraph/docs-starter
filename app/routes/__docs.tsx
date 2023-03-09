@@ -1,9 +1,9 @@
-import { json, Outlet, useLoaderData } from 'remix';
-import type { MetaFunction, LoaderFunction } from 'remix';
+import { Outlet, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import type { MetaFunction, LoaderArgs } from '@remix-run/node';
 import cc from 'classcat';
 
 import { sdk } from '~/lib/hygraph.server';
-import type { GetAllNavItemsQuery } from '~/generated/schema.server';
 
 import { Header } from '~/components/header';
 import { Footer } from '~/components/footer';
@@ -12,16 +12,8 @@ import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { PreviewBanner } from '~/components/preview-banner';
 import { isPreviewMode } from '~/utils/preview-mode.server';
 
-type LoaderData = GetAllNavItemsQuery & {
-  isInPreview: boolean;
-  requestInfo: {
-    origin: string;
-    path: string;
-  };
-};
-
-export const meta: MetaFunction = ({ data }) => {
-  const requestInfo = (data as LoaderData | undefined)?.requestInfo;
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const requestInfo = data.requestInfo;
 
   return {
     viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
@@ -33,7 +25,7 @@ export const meta: MetaFunction = ({ data }) => {
   };
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const isInPreview = await isPreviewMode(request);
 
   const { GetAllNavItems } = await sdk({ preview: isInPreview });
@@ -47,10 +39,10 @@ export const loader: LoaderFunction = async ({ request }) => {
       path: new URL(request.url).pathname,
     },
   });
-};
+}
 
 export default function Layout() {
-  const { navigations, isInPreview } = useLoaderData<LoaderData>();
+  const { navigations, isInPreview } = useLoaderData<typeof loader>();
 
   return (
     <>

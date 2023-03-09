@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'remix';
+import { Link, useLocation } from '@remix-run/react';
 import { Popover } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import cc from 'classcat';

@@ -1,21 +1,14 @@
-import { json, MetaFunction, redirect, useLoaderData } from 'remix';
-import type { LoaderFunction } from 'remix';
+import { redirect } from '@remix-run/node';
+import type { LoaderArgs, MetaFunction } from '@remix-run/node';
+import { typedjson, useTypedLoaderData } from 'remix-typedjson';
 
-import type { GetPageQuery } from '~/generated/schema.server';
 import { sdk } from '~/lib/hygraph.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { isPreviewMode } from '~/utils/preview-mode.server';
 
-type LoaderData = GetPageQuery & {
-  requestInfo: {
-    origin: string;
-    path: string;
-  };
-};
-
-export const meta: MetaFunction = ({ data }) => {
-  const requestInfo = (data as LoaderData | undefined)?.requestInfo;
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const requestInfo = data.requestInfo;
 
   const title = data?.page?.seo?.title ?? data?.page?.title;
 
@@ -29,7 +22,7 @@ export const meta: MetaFunction = ({ data }) => {
   });
 };
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export async function loader({ request, params }: LoaderArgs) {
   const { slug } = params;
 
   // If slug is /homepage, redirect it to the index page to avoid duplicated pages
@@ -62,17 +55,17 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     throw redirect(`/404`);
   }
 
-  return json({
+  return typedjson({
     page,
     requestInfo: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
     },
   });
-};
+}
 
 export default function PostRoute() {
-  const data = useLoaderData<LoaderData>();
+  const data = useTypedLoaderData<typeof loader>();
 
   return <Content page={data.page} />;
 }
