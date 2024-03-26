@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link, useLocation } from '@remix-run/react';
 import { Popover } from '@headlessui/react';
-import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import cc from 'classcat';
 
 import { Logo } from '~/components/logo';
@@ -42,9 +42,9 @@ export function Header({ navigations }: GetAllNavItemsQuery) {
                 <Popover.Button className="-mx-2 inline-flex items-center justify-center rounded-md p-2 text-white">
                   <span className="sr-only">Open menu</span>
                   {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                   ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                   )}
                 </Popover.Button>
               </div>
