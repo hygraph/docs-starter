@@ -8,9 +8,7 @@ import { isPreviewMode } from '~/utils/preview-mode.server';
 import { useLoaderData } from '@remix-run/react';
 import { GetPageQuery } from '~/generated/schema.server';
 
-export const meta: MetaFunction<typeof loader> = ({
-  data,
-}) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const requestInfo = data?.requestInfo;
 
   const title = data?.page?.seo?.title ?? data?.page?.title;
@@ -55,7 +53,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     }
 
     // If there's no chapter, redirect to 404
-    throw redirect(`/404`);
+    throw new Response(null, {
+      status: 404,
+      statusText: 'Not Found',
+    });
   }
 
   return json({

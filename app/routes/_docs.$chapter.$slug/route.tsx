@@ -34,12 +34,18 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   });
 
   if (!page) {
-    throw redirect(`/404`);
+    throw new Response(null, {
+      status: 404,
+      statusText: 'Not Found',
+    });
   }
 
   // Checks if the page chapter is the same as the chapter slug from the params
   if (chapter && slug && page.chapter?.slug !== chapter) {
-    throw redirect(`/404`);
+    throw new Response(null, {
+      status: 404,
+      statusText: 'Not Found',
+    });
   }
 
   return json({
