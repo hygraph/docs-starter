@@ -1,6 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ['./app/**/*.{ts,tsx,jsx,js}'],
+import { type Config } from "tailwindcss";
+
+export default {
+  content: ['./app/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       boxShadow: {
@@ -10,4 +11,4 @@ module.exports = {
   },
   variants: {},
   plugins: [require('@tailwindcss/typography')],
-};
+} satisfies Config;

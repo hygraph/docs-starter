@@ -1,6 +1,6 @@
 import { Outlet, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import type { MetaFunction, LoaderArgs } from '@remix-run/node';
+import type { MetaFunction, LoaderFunctionArgs } from '@remix-run/node';
 import cc from 'classcat';
 
 import { sdk } from '~/lib/hygraph.server';
@@ -13,19 +13,21 @@ import { PreviewBanner } from '~/components/preview-banner';
 import { isPreviewMode } from '~/utils/preview-mode.server';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const requestInfo = data.requestInfo;
+  const requestInfo = data?.requestInfo;
 
-  return {
-    viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
-    'theme-color': '#1d4ed8',
+  return [
     ...getSocialMetas({
       origin: requestInfo?.origin,
       url: getUrl(requestInfo),
     }),
-  };
+    {
+      name: 'theme-color',
+      content: '#1d4ed8',
+    },
+  ];
 };
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const isInPreview = await isPreviewMode(request);
 
   const { GetAllNavItems } = await sdk({ preview: isInPreview });

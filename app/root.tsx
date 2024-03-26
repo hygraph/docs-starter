@@ -1,24 +1,23 @@
 import { ReactNode } from 'react';
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  json,
+  useLoaderData,
+  useRouteError,
 } from '@remix-run/react';
-import type { LinksFunction, LoaderArgs } from '@remix-run/node';
-import { typedjson, useTypedLoaderData } from 'remix-typedjson';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 
-import styles from '~/styles/tailwind.css';
 import { getUrl, getDomainUrl } from '~/utils/seo';
 
-export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
+import './tailwind.css';
 
-export async function loader({ request }: LoaderArgs) {
-  return typedjson({
+export async function loader({ request }: LoaderFunctionArgs) {
+  return json({
     requestInfo: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
@@ -37,9 +36,8 @@ function Document({
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-
         <link rel="canonical" href={getUrl(requestInfo)} />
-
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
@@ -47,18 +45,41 @@ function Document({
         {children}
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
   );
 }
 
-export default function Root() {
-  const { requestInfo } = useTypedLoaderData<typeof loader>();
+export default function App() {
+  const { requestInfo } = useLoaderData<typeof loader>();
 
   return (
     <Document requestInfo={requestInfo}>
       <Outlet />
     </Document>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  return (
+    <html>
+      <head>
+        <title>Oops!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <h1>
+          {isRouteErrorResponse(error)
+            ? `${error.status} ${error.statusText}`
+            : error instanceof Error
+              ? error.message
+              : 'Unknown Error'}
+        </h1>
+        <Scripts />
+      </body>
+    </html>
   );
 }
