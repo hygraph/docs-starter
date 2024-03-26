@@ -54,9 +54,10 @@ export default function Layout() {
         <Header navigations={navigations} />
       </div>
 
-      <div className="h-full bg-white">
+      <div className="bg-white">
         <div className="mx-auto max-w-7xl">
-          <div className="p-6 text-indigo-700 md:flex md:space-x-12 md:px-12 md:py-12">
+          {/* 143px is the height of the header + footer height (and border) */}
+          <div className="p-6 text-indigo-700 md:flex md:space-x-12 md:px-12 md:py-12 min-h-[calc(100vh-143px)]">
             <nav
               className={cc([
                 'fixed hidden h-full w-full flex-shrink-0 pb-6 md:block md:w-52 md:pb-12',
@@ -70,9 +71,8 @@ export default function Layout() {
             </main>
           </div>
         </div>
+        <Footer />
       </div>
-
-      <Footer />
     </>
   );
 }

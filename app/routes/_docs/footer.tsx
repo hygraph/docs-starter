@@ -3,9 +3,9 @@ import { Link } from '~/components/link';
 
 export function Footer() {
   return (
-    <div className="relative z-20 mt-6 border-t border-gray-100 py-6 md:mt-12 md:py-12">
-      <footer className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="flex items-center justify-between">
+    <div className="border-t border-gray-100 h-16 bg-white mt-auto flex items-center">
+      <footer className="mx-auto max-w-7xl px-6 lg:px-12 w-full">
+        <div className="flex items-center justify-between w-full">
           <p>
             Docs Starter by{' '}
             <Link href="https://hygraph.com" className="text-indigo-700">
