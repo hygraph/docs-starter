@@ -1,11 +1,11 @@
 import { json, redirect } from '@remix-run/node';
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 
 import { sdk } from '~/lib/hygraph.server';
 import { previewModeCookie } from '~/utils/preview-mode.server';
 import { parseCookie } from '~/utils/parse-cookie.server';
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderFunctionArgs) {
   const requestUrl = new URL(request?.url);
   const secret = requestUrl?.searchParams?.get('secret');
   const slug = requestUrl?.searchParams?.get('slug');
@@ -36,4 +36,4 @@ export const loader: LoaderFunction = async ({ request }) => {
       'Set-Cookie': await previewModeCookie.serialize(cookie),
     },
   });
-};
+}

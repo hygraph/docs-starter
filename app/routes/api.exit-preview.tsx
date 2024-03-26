@@ -1,14 +1,14 @@
 import { redirect } from '@remix-run/node';
-import type { ActionFunction, LoaderFunction } from '@remix-run/node';
+import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 
 import { parseCookie } from '~/utils/parse-cookie.server';
 import { previewModeCookie } from '~/utils/preview-mode.server';
 
-export const loader: LoaderFunction = async () => {
+export async function loader({}: LoaderFunctionArgs) {
   return redirect('/');
-};
+}
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionFunctionArgs) {
   const cookie = await parseCookie(request, previewModeCookie);
   cookie.stage = 'published';
 
@@ -17,4 +17,4 @@ export const action: ActionFunction = async ({ request }) => {
       'Set-Cookie': await previewModeCookie.serialize(cookie),
     },
   });
-};
+}

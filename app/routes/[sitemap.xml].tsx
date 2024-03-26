@@ -1,8 +1,8 @@
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 
 import { getSitemapXml } from '~/utils/sitemap.server';
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderFunctionArgs) {
   const sitemap = await getSitemapXml(request);
 
   return new Response(sitemap, {
@@ -12,4 +12,4 @@ export const loader: LoaderFunction = async ({ request }) => {
       'cache-control': 'max-age=900',
     },
   });
-};
+}
