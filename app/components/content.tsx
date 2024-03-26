@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ClientOnly } from "remix-utils/client-only";
+import { ClientOnly } from 'remix-utils/client-only';
 
 import type { GetPageQuery } from '~/generated/schema.server';
 import { useMarkdownHeadings } from '~/hooks/useMarkdownHeadings';

@@ -4,9 +4,9 @@ import { Popover } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import cc from 'classcat';
 
-import { Logo } from '~/components/logo';
+import { Logo } from './logo';
 import { GetAllNavItemsQuery } from '~/generated/schema.server';
-import { Nav } from '~/components/nav';
+import { Nav } from './nav';
 
 export function Header({ navigations }: GetAllNavItemsQuery) {
   const buttonRef = useRef<HTMLButtonElement>(null);

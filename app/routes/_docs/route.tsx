@@ -5,9 +5,9 @@ import cc from 'classcat';
 
 import { sdk } from '~/lib/hygraph.server';
 
-import { Header } from '~/components/header';
-import { Footer } from '~/components/footer';
-import { Nav } from '~/components/nav';
+import { Header } from './header';
+import { Footer } from './footer';
+import { Nav } from './nav';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { PreviewBanner } from '~/components/preview-banner';
 import { isPreviewMode } from '~/utils/preview-mode.server';

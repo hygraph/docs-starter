@@ -1,5 +1,5 @@
 import { GitHub } from './github';
-import { Link } from './link';
+import { Link } from '~/components/link';
 
 export function Footer() {
   return (
