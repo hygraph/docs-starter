@@ -44,7 +44,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return getSocialMetas({
     title,
     description: data?.page?.seo?.description as string,
-    origin: requestInfo?.origin,
+    requestInfo,
     url: getUrl(requestInfo),
     noindex: data?.page?.seo?.noindex ?? false,
     image: data?.page?.seo?.image?.url,

@@ -33,15 +33,17 @@ export function getSocialMetas({
   description = 'Docs Starter built with Remix and powered by Hygraph. No longer are you tied to markdown files, Git workflows, and writing documentation in your code editor.',
   noindex = false,
   image,
-  origin,
+  requestInfo,
 }: {
-  origin?: string;
+  requestInfo?: { origin: string; path: string };
   image?: string;
   url: string;
   title?: string;
   description?: string;
   noindex?: boolean;
 }): MetaDescriptor[] {
+  const origin = requestInfo?.origin;
+
   const parsedImage = image
     ? image
     : urljoin(origin ?? defaultDomain, '/og-fallback.png');
@@ -61,6 +63,11 @@ export function getSocialMetas({
     {
       name: 'robots',
       content: noindex ? 'noindex' : 'index',
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: getUrl(requestInfo),
     },
     // Open Graph
     {

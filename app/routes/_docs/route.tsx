@@ -17,7 +17,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   return [
     ...getSocialMetas({
-      origin: requestInfo?.origin,
+      requestInfo,
       url: getUrl(requestInfo),
     }),
     {
