@@ -1,15 +1,11 @@
-import type { LoaderArgs } from '@remix-run/node';
-import {
-  typedjson,
-  TypedMetaFunction,
-  useTypedLoaderData,
-} from 'remix-typedjson';
-
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import { sdk } from '~/lib/hygraph.server';
 import { Content } from '~/components/content';
 import { getDomainUrl, getSocialMetas, getUrl } from '~/utils/seo';
 import { isPreviewMode } from '~/utils/preview-mode.server';
 import { GetPageQuery } from '~/generated/schema.server';
+import { useLoaderData } from '@remix-run/react';
 
 const fallbackContent: GetPageQuery['page'] = {
   title: 'Hygraph Docs Starter',
@@ -40,7 +36,7 @@ const fallbackContent: GetPageQuery['page'] = {
   },
 };
 
-export const meta: TypedMetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const requestInfo = data?.requestInfo;
 
   const title = data?.page?.seo?.title ?? data?.page?.title;
@@ -48,14 +44,14 @@ export const meta: TypedMetaFunction<typeof loader> = ({ data }) => {
   return getSocialMetas({
     title,
     description: data?.page?.seo?.description as string,
-    origin: requestInfo?.origin,
+    requestInfo,
     url: getUrl(requestInfo),
     noindex: data?.page?.seo?.noindex ?? false,
     image: data?.page?.seo?.image?.url,
   });
 };
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const isInPreview = await isPreviewMode(request);
 
   const { GetPage } = await sdk({
@@ -70,14 +66,14 @@ export async function loader({ request }: LoaderArgs) {
     path: new URL(request.url).pathname,
   };
 
-  return typedjson({
+  return json({
     page: page ?? fallbackContent,
     requestInfo,
   });
 }
 
 export default function Index() {
-  const data = useTypedLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
 
-  return <Content page={data.page} disableToc />;
+  return <Content page={data.page as GetPageQuery['page']} disableToc />;
 }

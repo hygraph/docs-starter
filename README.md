@@ -2,7 +2,7 @@
 
 > A [Remix](https://remix.run/) starter for creating a documentation websites with [Hygraph](https://hygraph.com).
 
-![Hygraph Docs Starter](https://user-images.githubusercontent.com/950181/154275008-7284677d-f319-42ce-b88b-b5e11b914645.png)
+![Hygraph Docs Starter](https://github.com/hygraph/docs-starter/assets/26466516/778a8b02-0dce-4bf6-bb31-d9739375d25e)
 
 ## Getting Started
 

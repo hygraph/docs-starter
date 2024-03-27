@@ -1,5 +1,5 @@
-import { ExternalLinkIcon } from '@heroicons/react/outline';
 import cc from 'classcat';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 
 import {
   NavExternalLinkFragment,
@@ -14,7 +14,7 @@ export function ExternalLink(props: NavExternalLinkFragment) {
       className="flex items-center py-0.5 text-gray-700 hover:text-indigo-700"
     >
       {props.label}
-      <ExternalLinkIcon className="ml-2 h-4 w-4" />
+      <ArrowTopRightOnSquareIcon className="ml-2 h-4 w-4" />
     </Link>
   );
 }

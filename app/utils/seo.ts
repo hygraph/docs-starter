@@ -1,5 +1,7 @@
 import urljoin from 'url-join';
 
+import type { MetaDescriptor } from '@remix-run/react';
+
 const defaultDomain = 'https://docs.withheadlesscms.com';
 
 export function removeTrailingSlash(s: string) {
@@ -31,40 +33,91 @@ export function getSocialMetas({
   description = 'Docs Starter built with Remix and powered by Hygraph. No longer are you tied to markdown files, Git workflows, and writing documentation in your code editor.',
   noindex = false,
   image,
-  origin,
+  requestInfo,
 }: {
-  origin?: string;
+  requestInfo?: { origin: string; path: string };
   image?: string;
   url: string;
   title?: string;
   description?: string;
   noindex?: boolean;
-}) {
+}): MetaDescriptor[] {
+  const origin = requestInfo?.origin;
+
   const parsedImage = image
     ? image
     : urljoin(origin ?? defaultDomain, '/og-fallback.png');
 
-  const tags: { [key: string]: string } = {
-    title,
-    description,
-    image: parsedImage,
-    'og:url': url,
-    'og:title': title,
-    'og:image': parsedImage,
-    'og:description': description,
-    'og:type': 'website',
-    'twitter:card': 'summary_large_image',
-    'twitter:creator': '@hygraphcom',
-    'twitter:site': '@hygraphcom',
-    'twitter:title': title,
-    'twitter:image': parsedImage,
-    'twitter:description': description,
-    'twitter:alt': title,
-  };
-
-  if (noindex) {
-    tags.robots = 'noindex';
-  }
-
-  return tags;
+  return [
+    {
+      title,
+    },
+    {
+      name: 'description',
+      content: description,
+    },
+    {
+      name: 'image',
+      content: parsedImage,
+    },
+    {
+      name: 'robots',
+      content: noindex ? 'noindex' : 'index',
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: getUrl(requestInfo),
+    },
+    // Open Graph
+    {
+      property: 'og:url',
+      content: url,
+    },
+    {
+      property: 'og:title',
+      content: title,
+    },
+    {
+      property: 'og:description',
+      content: description,
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+    {
+      property: 'og:image',
+      content: parsedImage,
+    },
+    // Twitter
+    {
+      name: 'twitter:title',
+      content: title,
+    },
+    {
+      name: 'twitter:description',
+      content: description,
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    {
+      name: 'twitter:image',
+      content: parsedImage,
+    },
+    {
+      name: 'twitter:alt',
+      content: title,
+    },
+    {
+      name: 'twitter:creator',
+      content: '@hygraph',
+    },
+    {
+      name: 'twitter:site',
+      content: '@hygraph',
+    },
+  ];
 }

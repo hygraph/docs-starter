@@ -1,24 +1,22 @@
 import { ReactNode } from 'react';
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  json,
+  useRouteError,
 } from '@remix-run/react';
-import type { LinksFunction, LoaderArgs } from '@remix-run/node';
-import { typedjson, useTypedLoaderData } from 'remix-typedjson';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 
-import styles from '~/styles/tailwind.css';
-import { getUrl, getDomainUrl } from '~/utils/seo';
+import { getDomainUrl } from '~/utils/seo';
 
-export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
+import './tailwind.css';
 
-export async function loader({ request }: LoaderArgs) {
-  return typedjson({
+export async function loader({ request }: LoaderFunctionArgs) {
+  return json({
     requestInfo: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
@@ -26,20 +24,12 @@ export async function loader({ request }: LoaderArgs) {
   });
 }
 
-function Document({
-  children,
-  requestInfo,
-}: {
-  children: ReactNode;
-  requestInfo: { origin: string; path: string };
-}) {
+export function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-
-        <link rel="canonical" href={getUrl(requestInfo)} />
-
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
@@ -47,18 +37,31 @@ function Document({
         {children}
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
   );
 }
 
-export default function Root() {
-  const { requestInfo } = useTypedLoaderData<typeof loader>();
+export default function App() {
+  return <Outlet />;
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
 
   return (
-    <Document requestInfo={requestInfo}>
-      <Outlet />
-    </Document>
+    <Layout>
+      <div className="p-6 text-white md:flex md:space-x-12 md:px-12 md:py-12 min-h-screen bg-indigo-700">
+        <main className="w-full md:pl-52">
+          <h1 className="text-2xl">
+            {isRouteErrorResponse(error)
+              ? `${error.status} ${error.statusText}`
+              : error instanceof Error
+                ? error.message
+                : 'Unknown Error'}
+          </h1>
+        </main>
+      </div>
+    </Layout>
   );
 }
