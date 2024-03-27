@@ -46,7 +46,7 @@ export function getSocialMetas({
 
   const parsedImage = image
     ? image
-    : urljoin(origin ?? defaultDomain, '/og-fallback.png');
+    : urljoin(origin ?? defaultDomain, '/og-image.png');
 
   return [
     {
