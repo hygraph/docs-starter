@@ -3,6 +3,7 @@
   "name": "hygraph-docs-starter",
   "description": "Docs Starter built with Remix and powered by Hygraph",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
