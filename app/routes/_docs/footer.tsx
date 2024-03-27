@@ -3,7 +3,7 @@ import { Link } from '~/components/link';
 
 export function Footer() {
   return (
-    <div className="border-t border-gray-100 h-16 bg-white mt-auto flex items-center">
+    <div className="border-t border-gray-100 h-16 bg-white mt-auto flex items-center relative z-10">
       <footer className="mx-auto max-w-7xl px-6 lg:px-12 w-full">
         <div className="flex items-center justify-between w-full">
           <p>
